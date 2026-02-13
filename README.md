@@ -1,13 +1,13 @@
 # 👋 Hi, I`m Fation
 
 
-I'm 24 Years old and a graduate and trained computer scientist from beautiful Franconia in Germany.
+I'm 27 Years old and a graduate and trained computer scientist from beautiful Franconia in Germany.
 
-- 👨‍🎓 I’m currently studying **International Information Systems Management** at [University of Bamberg](https://www.uni-bamberg.de/en/) at master´s degree
+- 👨‍🎓 I finised my masters in **International Information Systems Management** at [University of Bamberg](https://www.uni-bamberg.de/en/)
 
 - 💞️ With innovative ideas and products I want to actively shape the world of tomorrow and develop our society.
 
-- 📫 More Informations about me you can find on my [website](https://www.fation.de) and other Social Madia Platforms
+- 📫 More Informations about me you can find on my [Linkedin]((https://www.linkedin.com/in/fation/)) and other Social Madia Platforms
 
 &nbsp;
 &nbsp;
