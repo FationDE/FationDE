@@ -529,7 +529,7 @@ footer { color: var(--muted); font-size: var(--step--1); max-width: 72ch; }
         <div class="chips" id="chips"></div>
         <form class="compose" id="compose">
           <label for="input" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label>
-          <button type="button" class="mic" id="mic" hidden>
+          <button type="button" class="mic" id="mic">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
           </button>
           <textarea id="input" rows="1" maxlength="600"></textarea>
@@ -579,6 +579,7 @@ const TXT = {
     voiceSpeaking: 'Mariam is talking. Tap the microphone to answer her.',
     voiceAgain: 'Your turn. Tap the microphone to answer.',
     kbdHint: 'Tip: use the microphone on your keyboard to talk. Mariam answers out loud.',
+    kbdNow: 'Tap the 🎤 on your keyboard and speak, then tap Send. Mariam answers out loud. (In Chrome on a computer you can talk to her directly.)',
     micDenied: 'The microphone is switched off for this page. You can allow it in the page’s Permissions menu, or keep typing.',
     micBusy: 'The microphone did not start. Tap it again in a moment.',
     speakOn: '🔊 Voice on', speakOff: '🔇 Voice off',
@@ -628,6 +629,7 @@ const TXT = {
     voiceSpeaking: 'Mariam spricht. Tippe aufs Mikrofon, um ihr zu antworten.',
     voiceAgain: 'Du bist dran. Tippe aufs Mikrofon, um zu antworten.',
     kbdHint: 'Tipp: Nutze das Mikrofon deiner Tastatur, um zu sprechen. Mariam antwortet laut.',
+    kbdNow: 'Tippe auf das 🎤 deiner Tastatur und sprich, dann auf Senden. Mariam antwortet laut. (In Chrome am Computer kannst du direkt mit ihr sprechen.)',
     micDenied: 'Das Mikrofon ist für diese Seite ausgeschaltet. Du kannst es im Berechtigungsmenü der Seite erlauben oder weiter tippen.',
     micBusy: 'Das Mikrofon ist nicht angegangen. Tippe gleich noch einmal.',
     speakOn: '🔊 Stimme an', speakOff: '🔇 Stimme aus',
@@ -1058,7 +1060,7 @@ function refreshVoiceUI(phase) {
   st.setAttribute('aria-pressed', String(speakOn));
   const vs = $('#voiceStatus');
   vs.classList.toggle('live', phase === 'listening');
-  const micOk = !!dict && !$('#mic').hidden;
+  const micOk = (!!dict || (!!SR && !srFailed)) && !$('#mic').hidden;
   let msg = '';
   if (phase === 'listening') msg = t('voiceListening');
   else if (phase === 'waiting') msg = micOk ? t('voiceWaiting') : '';
@@ -1090,10 +1092,43 @@ async function finishVoice() {
   if (text) ask(text, null);
   else refreshVoiceUI();
 }
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+let srFailed = false, sr = null, dictDone = false;
+function keyboardFallback() {
+  refreshVoiceUI('error');
+  $('#voiceStatus').textContent = t('kbdNow');
+  input.focus();
+}
+function startBrowserRecognition() {
+  try {
+    sr = new SR();
+    sr.lang = lang === 'de' ? 'de-DE' : 'en-US';
+    sr.interimResults = true;
+    sr.continuous = false;
+    let finalText = '';
+    sr.onstart = () => { $('#mic').classList.add('on'); input.placeholder = t('listeningPh'); refreshVoiceUI('listening'); };
+    sr.onresult = (e) => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalText += e.results[i][0].transcript; else interim += e.results[i][0].transcript;
+      }
+      input.value = (finalText + ' ' + interim).trim(); autosize();
+    };
+    sr.onerror = (e) => { if (e.error === 'not-allowed' || e.error === 'service-not-allowed' || e.error === 'audio-capture') { srFailed = true; finalText = ''; keyboardFallback(); } };
+    sr.onend = () => {
+      sr = null;
+      $('#mic').classList.remove('on'); input.placeholder = t('placeholder');
+      const text = input.value.trim();
+      if (text && !srFailed) { input.value = ''; autosize(); ask(text, null); }
+      else if (!srFailed) refreshVoiceUI();
+    };
+    sr.start();
+  } catch (e) { srFailed = true; keyboardFallback(); }
+}
 function setupDictation() {
+  dictDone = true;
   const mic = $('#mic');
-  if (!dict) { mic.hidden = true; refreshVoiceUI(); return; }
-  mic.hidden = false;
+  if (!dict) { refreshVoiceUI(); return; }
   dict.onPartial(({ text }) => { voicePartial = text || ''; renderDraft(); armSilence(); });
   dict.onFinal(({ text }) => { voiceBuf += text; voicePartial = ''; renderDraft(); armSilence(); });
   dict.onState(({ state, reason }) => {
@@ -1106,13 +1141,17 @@ function setupDictation() {
     if (state === 'idle') {
       clearTimeout(silenceTimer);
       if (reason === 'not_granted') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micDenied'); }
-      else if (reason === 'unavailable') { mic.hidden = true; refreshVoiceUI(); }
+      else if (reason === 'unavailable') { dict = null; keyboardFallback(); }
       else if (reason === 'viewer_stopped' && (voiceBuf + voicePartial).trim()) finishVoice();
       else if (!busy) refreshVoiceUI();
     }
   });
-  mic.setAttribute('aria-label', t('mic')); mic.title = t('mic');
-  mic.addEventListener('click', () => {
+  refreshVoiceUI();
+}
+$('#mic').setAttribute('aria-label', TXT[lang].mic);
+$('#mic').title = TXT[lang].mic;
+$('#mic').addEventListener('click', () => {
+  if (dict) {
     if (dict.active()) { finishVoice(); return; }
     if (busy) return;
     stopSpeaking();
@@ -1120,12 +1159,17 @@ function setupDictation() {
     dict.start().catch((e) => {
       const code = e && e.code;
       if (code === 'not_granted') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micDenied'); }
-      else if (code === 'unavailable') { mic.hidden = true; refreshVoiceUI(); }
+      else if (code === 'unavailable') { dict = null; keyboardFallback(); }
       else if (code !== 'stopped' && code !== 'dismissed') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micBusy'); }
     });
-  });
-  refreshVoiceUI();
-}
+    return;
+  }
+  if (sr) { try { sr.stop(); } catch (e) { /* ignore */ } return; }
+  if (busy) return;
+  stopSpeaking();
+  if (SR && !srFailed) { input.value = ''; autosize(); startBrowserRecognition(); return; }
+  keyboardFallback();
+});
 function finishMariam(m, text, voice) {
   m.classList.remove('pending');
   m.querySelector('.bubble').textContent = text;
