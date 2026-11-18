@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#120d1f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Die Einladung – eine kurze Zeitreise von Dubai 1971 nach Dubai 2071.">
+<title>Die Einladung · Dubai 1971 → 2071</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" aria-label="Spielfläche"></canvas>
+
+  <div id="hud">
+    <div id="chapter"></div>
+    <div id="timer" hidden></div>
+    <div id="buttons">
+      <button id="btnHint" title="Tipp">?</button>
+      <button id="btnSound" title="Ton">🔊</button>
+      <button id="btnLang" title="Sprache">EN</button>
+      <button id="btnFull" title="Vollbild">⛶</button>
+    </div>
+  </div>
+
+  <div id="inventory" hidden></div>
+
+  <div id="dialog" hidden>
+    <div class="who"></div>
+    <div class="text"></div>
+    <div class="next">▼</div>
+  </div>
+
+  <div id="touch" hidden>
+    <button id="tLeft" aria-label="links">◀</button>
+    <button id="tRight" aria-label="rechts">▶</button>
+    <button id="tJump" aria-label="springen">▲</button>
+  </div>
+
+  <div id="screen" hidden></div>
+  <div id="toast"></div>
+</div>
+
+<div id="rotate" hidden>
+  <div class="phone">📱</div>
+  <p id="rotateText"></p>
+  <button id="rotateBtn"></button>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/art.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/tunnel.js"></script>
+<script src="js/runner.js"></script>
+<script src="js/finale.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

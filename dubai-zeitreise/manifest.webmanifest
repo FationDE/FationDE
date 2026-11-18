@@ -1,0 +1,13 @@
+{
+  "name": "Die Einladung · Dubai 1971 → 2071",
+  "short_name": "Die Einladung",
+  "description": "Eine kurze Zeitreise von Dubai 1971 nach Dubai 2071.",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#120d1f",
+  "theme_color": "#120d1f",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
