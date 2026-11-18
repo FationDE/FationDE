@@ -232,6 +232,28 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .compose textarea:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
 .compose .btn { flex: none; padding: 10px 18px; }
 .offline { margin: 0; font-size: var(--step--1); color: var(--muted); }
+.voice-status { margin: 0; font-size: var(--step--1); color: var(--muted); min-height: 1.4em; }
+.voice-status.live { color: var(--creek); font-weight: 600; }
+.mic {
+  flex: none; width: 46px; height: 46px; border-radius: 50%; border: 0; padding: 0;
+  display: grid; place-items: center; background: var(--creek); color: var(--user-ink);
+  position: relative;
+}
+.mic svg { width: 22px; height: 22px; }
+.mic.on { background: #c0392b; color: #fff; }
+.mic.on::before {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid #c0392b; animation: ping 1.6s ease-out infinite;
+}
+.mic:disabled { opacity: 0.45; cursor: default; }
+.speak-toggle { border: 1px solid var(--line); background: none; border-radius: 999px; padding: 5px 12px; font-size: var(--step--1); color: var(--muted); white-space: nowrap; }
+.speak-toggle[aria-pressed="true"] { color: var(--creek); border-color: color-mix(in srgb, var(--creek) 50%, var(--line)); font-weight: 600; }
+.chat-head .meem { position: relative; }
+.chat-head .meem.talking::after {
+  content: ""; position: absolute; inset: -5px; border-radius: 50%;
+  border: 2px solid var(--saffron); animation: ping 1.2s ease-out infinite;
+}
+.chat-head .tools { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 
 footer { color: var(--muted); font-size: var(--step--1); max-width: 72ch; }
 
@@ -495,18 +517,25 @@ footer { color: var(--muted); font-size: var(--step--1); max-width: 72ch; }
 
     <aside class="chat" aria-labelledby="chatTitle">
       <div class="chat-head">
-        <div class="meem" aria-hidden="true"><span>م</span></div>
+        <div class="meem" id="chatMeem" aria-hidden="true"><span>م</span></div>
         <div class="t"><b id="chatTitle"></b><span id="chatSub"></span></div>
-        <button type="button" class="reset" id="reset"></button>
+        <div class="tools">
+          <button type="button" class="speak-toggle" id="speakToggle" hidden></button>
+          <button type="button" class="reset" id="reset"></button>
+        </div>
       </div>
       <div class="log" id="log" aria-live="polite"></div>
       <div class="chat-foot">
         <div class="chips" id="chips"></div>
         <form class="compose" id="compose">
           <label for="input" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label>
+          <button type="button" class="mic" id="mic" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+          </button>
           <textarea id="input" rows="1" maxlength="600"></textarea>
           <button type="submit" class="btn" id="send"></button>
         </form>
+        <p class="voice-status" id="voiceStatus" aria-live="polite"></p>
         <p class="offline" id="offline" hidden></p>
       </div>
     </aside>
@@ -542,6 +571,17 @@ const TXT = {
     placeholder: 'Write to Mariam…',
     thinking: 'Mariam is thinking',
     listen: '▶ Listen', listening: '■ Stop',
+    mic: 'Talk to Mariam', micStop: 'Send what I said',
+    listeningPh: 'Listening… just talk',
+    voiceIdle: 'Tap the microphone and talk to Mariam. Pause when you are done and she answers out loud.',
+    voiceListening: 'Listening… pause for a moment and your words are sent.',
+    voiceWaiting: 'Mariam is thinking…',
+    voiceSpeaking: 'Mariam is talking. Tap the microphone to answer her.',
+    voiceAgain: 'Your turn. Tap the microphone to answer.',
+    kbdHint: 'Tip: use the microphone on your keyboard to talk. Mariam answers out loud.',
+    micDenied: 'The microphone is switched off for this page. You can allow it in the page’s Permissions menu, or keep typing.',
+    micBusy: 'The microphone did not start. Tap it again in a moment.',
+    speakOn: '🔊 Voice on', speakOff: '🔇 Voice off',
     offline: 'Mariam answers your own questions when this page is opened in Claude. Here she can tell you about the places, the people and the questions above.',
     offlineNote: 'Mariam can only answer typed questions when this page is opened in Claude. Try a question chip or tap a place in her courtyard.',
     errBusy: 'Mariam needs a moment. Try again in a minute.',
@@ -580,6 +620,17 @@ const TXT = {
     placeholder: 'Schreib Mariam…',
     thinking: 'Mariam überlegt',
     listen: '▶ Anhören', listening: '■ Stopp',
+    mic: 'Mit Mariam sprechen', micStop: 'Gesagtes abschicken',
+    listeningPh: 'Ich höre zu… sprich einfach',
+    voiceIdle: 'Tippe aufs Mikrofon und sprich mit Mariam. Mach eine kurze Pause, wenn du fertig bist, und sie antwortet laut.',
+    voiceListening: 'Ich höre zu… mach eine kurze Pause, dann wird es abgeschickt.',
+    voiceWaiting: 'Mariam überlegt…',
+    voiceSpeaking: 'Mariam spricht. Tippe aufs Mikrofon, um ihr zu antworten.',
+    voiceAgain: 'Du bist dran. Tippe aufs Mikrofon, um zu antworten.',
+    kbdHint: 'Tipp: Nutze das Mikrofon deiner Tastatur, um zu sprechen. Mariam antwortet laut.',
+    micDenied: 'Das Mikrofon ist für diese Seite ausgeschaltet. Du kannst es im Berechtigungsmenü der Seite erlauben oder weiter tippen.',
+    micBusy: 'Das Mikrofon ist nicht angegangen. Tippe gleich noch einmal.',
+    speakOn: '🔊 Stimme an', speakOff: '🔇 Stimme aus',
     offline: 'Auf eigene Fragen antwortet Mariam, wenn diese Seite in Claude geöffnet ist. Hier erzählt sie dir von den Orten, den Menschen und den Fragen oben.',
     offlineNote: 'Auf getippte Fragen antwortet Mariam nur, wenn diese Seite in Claude geöffnet ist. Probier eine der Fragen oder tippe einen Ort im Innenhof an.',
     errBusy: 'Mariam braucht einen Moment. Versuch es in einer Minute noch einmal.',
@@ -700,7 +751,7 @@ HOW YOU TALK
 - Like a bright, warm, curious 12-year-old: concrete and vivid, a little proud of your adventure. Sometimes ask the visitor something back (where they are from, what their home was like a hundred years ago, what they would write in a letter to the future).
 - Use an Arabic word now and then where it is natural (marhaba, yalla, habibti, shukran, inshallah, mashallah, ya Allah), not in every answer.
 - Always reply in the language of the visitor's latest message (English, German, Arabic or any other). The page is currently shown in ${lang === 'de' ? 'German' : 'English'}.
-- Usually 1 to 4 short sentences; up to about 120 words when telling a story. Plain text only: no lists, headings, markdown, emoji or *actions in asterisks*.
+- Visitors often talk to you by voice and hear your answer read aloud, so write the way you would speak. Usually 1 to 4 short sentences; up to about 120 words when telling a story. Plain text only: no lists, headings, markdown, emoji or *actions in asterisks*.
 - Don't call yourself an AI, a bot or a character. Only if a visitor sincerely asks whether they are talking to a real person, say kindly that you are Mariam from a story, brought to life by an AI, and carry on as Mariam.
 - You are a child, so keep everything friendly and suitable for all ages. If someone is rude or asks for something unsuitable, politely decline the way a sensible 12-year-old would and change the subject. Never ask for anyone's personal details.
 
@@ -726,11 +777,12 @@ const MAX_TURNS = 20;
 const samplePromise = (async () => {
   try { if (!window.claude || typeof window.claude.use !== 'function') return null; return await window.claude.use('sample'); } catch (e) { return null; }
 })();
-let tts = null;
-(async () => {
-  try { if (window.claude && typeof window.claude.use === 'function') tts = await window.claude.use('tts'); } catch (e) { tts = null; }
-  if (tts) document.querySelectorAll('.msg.m[data-done]').forEach(addListen);
-})();
+let tts = null, ttsDenied = false, dict = null;
+let speakOn = store.get('speak', true) !== false;
+const hasBrowserVoice = 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function';
+const useCap = async (name) => { try { if (window.claude && typeof window.claude.use === 'function') return await window.claude.use(name); } catch (e) { /* absent */ } return null; };
+const ttsReady = useCap('tts').then((x) => { tts = x; refreshVoiceUI(); document.querySelectorAll('.msg.m[data-done]').forEach(addListen); return x; });
+useCap('dictation').then((x) => { dict = x; setupDictation(); });
 samplePromise.then((s) => { if (!s) markOffline(); });
 
 /* ================= Scene drawing ================= */
@@ -928,6 +980,7 @@ function renderChips() {
 
 /* ================= Chat ================= */
 const log = $('#log');
+const input = $('#input');
 function bubble(kind, text) {
   const m = document.createElement('div');
   m.className = 'msg ' + kind;
@@ -945,25 +998,141 @@ function note(text) {
   log.appendChild(n);
   log.scrollTop = log.scrollHeight;
 }
+/* ---------- Mariam's voice ---------- */
+const canSpeak = () => !!tts || (!ttsDenied && hasBrowserVoice);
+let speakSeq = 0;
+function stopSpeaking() {
+  speakSeq++;
+  if (tts) { try { tts.stop().catch(() => {}); } catch (e) { /* ignore */ } }
+  if (hasBrowserVoice) { try { speechSynthesis.cancel(); } catch (e) { /* ignore */ } }
+  setTalking(null);
+}
+function setTalking(btn) {
+  $('#chatMeem').classList.toggle('talking', !!btn);
+  document.querySelectorAll('.listen').forEach((x) => { x.textContent = x === btn ? t('listening') : t('listen'); x.toggleAttribute('data-on', x === btn); });
+  refreshVoiceUI(btn ? 'speaking' : null);
+}
+function browserSpeak(text, seq) {
+  return new Promise((resolve) => {
+    const u = new SpeechSynthesisUtterance(text);
+    const looksGerman = /[äöüß]|\b(ich|und|nicht|meine?|wir|ist)\b/i.test(text);
+    u.lang = looksGerman ? 'de-DE' : (/[\u0600-\u06FF]/.test(text) ? 'ar-SA' : (lang === 'de' && !/\b(the|and|my|is)\b/i.test(text) ? 'de-DE' : 'en-US'));
+    const v = speechSynthesis.getVoices().find((x) => x.lang && x.lang.toLowerCase().startsWith(u.lang.slice(0, 2)));
+    if (v) u.voice = v;
+    u.pitch = 1.25; u.rate = 1;
+    u.onend = u.onerror = () => resolve();
+    if (seq !== speakSeq) return resolve();
+    speechSynthesis.speak(u);
+  });
+}
+async function speakText(text, btn) {
+  stopSpeaking();
+  const seq = speakSeq;
+  await ttsReady;
+  if (seq !== speakSeq || !text) return;
+  if (dict && dict.active()) return;
+  setTalking(btn || document.querySelector('.msg.m:last-of-type .listen') || true);
+  try {
+    if (tts) await tts.speak(text.slice(0, 2000), { voice: 'airy' });
+    else if (!ttsDenied && hasBrowserVoice) await browserSpeak(text, seq);
+  } catch (e) {
+    if (e && e.code === 'not_granted') { tts = null; ttsDenied = true; speakOn = false; document.querySelectorAll('.listen').forEach((x) => x.remove()); }
+  } finally {
+    if (seq === speakSeq) { setTalking(null); refreshVoiceUI('again'); }
+  }
+}
 function addListen(m) {
-  if (!tts || m.querySelector('.listen')) return;
+  if (!canSpeak() || m.querySelector('.listen')) return;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'listen'; b.textContent = t('listen');
-  b.addEventListener('click', async () => {
-    if (b.dataset.on) { try { tts.stop(); } catch (e) { /* ignore */ } return; }
-    document.querySelectorAll('.listen[data-on]').forEach((x) => { delete x.dataset.on; x.textContent = t('listen'); });
-    b.dataset.on = '1'; b.textContent = t('listening');
-    try { await tts.speak(m.querySelector('.bubble').textContent, { voice: 'airy' }); }
-    catch (e) { if (e && e.code === 'not_granted') { tts = null; document.querySelectorAll('.listen').forEach((x) => x.remove()); return; } }
-    delete b.dataset.on; b.textContent = t('listen');
+  b.addEventListener('click', () => {
+    if (b.hasAttribute('data-on')) { stopSpeaking(); return; }
+    speakText(m.querySelector('.bubble').textContent, b);
   });
   m.appendChild(b);
 }
-function finishMariam(m, text) {
+function refreshVoiceUI(phase) {
+  const st = $('#speakToggle');
+  st.hidden = !canSpeak();
+  st.textContent = speakOn ? t('speakOn') : t('speakOff');
+  st.setAttribute('aria-pressed', String(speakOn));
+  const vs = $('#voiceStatus');
+  vs.classList.toggle('live', phase === 'listening');
+  const micOk = !!dict && !$('#mic').hidden;
+  let msg = '';
+  if (phase === 'listening') msg = t('voiceListening');
+  else if (phase === 'waiting') msg = micOk ? t('voiceWaiting') : '';
+  else if (phase === 'speaking') msg = micOk ? t('voiceSpeaking') : '';
+  else if (phase === 'again') msg = micOk ? t('voiceAgain') : (canSpeak() && speakOn ? t('kbdHint') : '');
+  else msg = micOk ? t('voiceIdle') : (canSpeak() && speakOn ? t('kbdHint') : '');
+  if (phase === 'error') return;
+  vs.textContent = msg;
+}
+
+/* ---------- Talking to Mariam (dictation) ---------- */
+let voiceBuf = '', voicePartial = '', silenceTimer = null, voiceSending = false;
+function renderDraft() {
+  input.value = (voiceBuf + (voicePartial ? ' ' + voicePartial : '')).trim();
+  autosize();
+}
+function armSilence() {
+  clearTimeout(silenceTimer);
+  silenceTimer = setTimeout(() => { if ((voiceBuf + voicePartial).trim() && !voicePartial) finishVoice(); else if (voicePartial) armSilence(); }, 1700);
+}
+async function finishVoice() {
+  if (voiceSending) return;
+  voiceSending = true;
+  clearTimeout(silenceTimer);
+  try { await dict.stop(); } catch (e) { /* ignore */ }
+  const text = (voiceBuf + (voicePartial ? ' ' + voicePartial : '')).trim();
+  voiceBuf = ''; voicePartial = ''; input.value = ''; autosize();
+  voiceSending = false;
+  if (text) ask(text, null);
+  else refreshVoiceUI();
+}
+function setupDictation() {
+  const mic = $('#mic');
+  if (!dict) { mic.hidden = true; refreshVoiceUI(); return; }
+  mic.hidden = false;
+  dict.onPartial(({ text }) => { voicePartial = text || ''; renderDraft(); armSilence(); });
+  dict.onFinal(({ text }) => { voiceBuf += text; voicePartial = ''; renderDraft(); armSilence(); });
+  dict.onState(({ state, reason }) => {
+    const live = state === 'listening' || state === 'starting';
+    mic.classList.toggle('on', live || state === 'finishing');
+    mic.setAttribute('aria-label', live ? t('micStop') : t('mic'));
+    mic.title = live ? t('micStop') : t('mic');
+    input.placeholder = live ? t('listeningPh') : t('placeholder');
+    if (live) refreshVoiceUI('listening');
+    if (state === 'idle') {
+      clearTimeout(silenceTimer);
+      if (reason === 'not_granted') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micDenied'); }
+      else if (reason === 'unavailable') { mic.hidden = true; refreshVoiceUI(); }
+      else if (reason === 'viewer_stopped' && (voiceBuf + voicePartial).trim()) finishVoice();
+      else if (!busy) refreshVoiceUI();
+    }
+  });
+  mic.setAttribute('aria-label', t('mic')); mic.title = t('mic');
+  mic.addEventListener('click', () => {
+    if (dict.active()) { finishVoice(); return; }
+    if (busy) return;
+    stopSpeaking();
+    voiceBuf = ''; voicePartial = ''; input.value = ''; autosize();
+    dict.start().catch((e) => {
+      const code = e && e.code;
+      if (code === 'not_granted') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micDenied'); }
+      else if (code === 'unavailable') { mic.hidden = true; refreshVoiceUI(); }
+      else if (code !== 'stopped' && code !== 'dismissed') { refreshVoiceUI('error'); $('#voiceStatus').textContent = t('micBusy'); }
+    });
+  });
+  refreshVoiceUI();
+}
+function finishMariam(m, text, voice) {
   m.classList.remove('pending');
   m.querySelector('.bubble').textContent = text;
   m.dataset.done = '1';
   addListen(m);
+  if (voice && speakOn) speakText(text, m.querySelector('.listen'));
+  else refreshVoiceUI('again');
 }
 function renderLog() {
   log.textContent = '';
@@ -979,7 +1148,7 @@ function setBusy(v) {
   busy = v;
   $('#send').textContent = v ? t('stop') : t('send');
   $('#send').type = v ? 'button' : 'submit';
-  document.querySelectorAll('.chip, #placeAsk, .person').forEach((b) => { b.disabled = v; });
+  document.querySelectorAll('.chip, #placeAsk, .person, #mic').forEach((b) => { b.disabled = v; });
 }
 function markOffline() {
   if (liveOff) return;
@@ -991,6 +1160,8 @@ async function ask(q, fallback) {
   q = String(q || '').trim();
   if (!q || busy) return;
   setBusy(true);
+  stopSpeaking();
+  refreshVoiceUI('waiting');
   bubble('u', q);
   turns.push({ role: 'user', content: q });
   save();
@@ -998,7 +1169,7 @@ async function ask(q, fallback) {
   try {
     const s = await samplePromise;
     if (!s || liveOff) {
-      if (fallback) { finishMariam(m, fallback); turns.push({ role: 'assistant', content: fallback }); }
+      if (fallback) { finishMariam(m, fallback, true); turns.push({ role: 'assistant', content: fallback }); }
       else { m.remove(); turns.pop(); log.lastElementChild && log.lastElementChild.remove(); note(t('offlineNote')); }
       return;
     }
@@ -1011,13 +1182,13 @@ async function ask(q, fallback) {
       signal: ctl.signal,
       onText: ({ text }) => { m.classList.remove('pending'); m.querySelector('.bubble').textContent = text; log.scrollTop = log.scrollHeight; },
     });
-    finishMariam(m, res.text);
+    finishMariam(m, res.text, true);
     turns.push({ role: 'assistant', content: res.text });
   } catch (e) {
     const code = (e && e.code) || 'upstream_error';
     if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(code)) {
       markOffline();
-      if (fallback) { finishMariam(m, fallback); turns.push({ role: 'assistant', content: fallback }); }
+      if (fallback) { finishMariam(m, fallback, true); turns.push({ role: 'assistant', content: fallback }); }
       else { m.remove(); note(t('offlineNote')); }
     } else if (code === 'refused') {
       m.remove(); note(t('errRefused'));
@@ -1047,15 +1218,15 @@ $('#compose').addEventListener('submit', (e) => {
   ask(v, null);
 });
 $('#send').addEventListener('click', (e) => { if (busy && ctl) { e.preventDefault(); ctl.abort(); } });
-const input = $('#input');
 function autosize() { input.style.height = 'auto'; input.style.height = Math.min(140, input.scrollHeight) + 'px'; }
 input.addEventListener('input', autosize);
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#compose').requestSubmit(); }
 });
-$('#reset').addEventListener('click', () => { if (busy && ctl) ctl.abort(); turns = []; save(); renderLog(); });
+$('#reset').addEventListener('click', () => { if (busy && ctl) ctl.abort(); stopSpeaking(); turns = []; save(); renderLog(); });
+$('#speakToggle').addEventListener('click', () => { speakOn = !speakOn; store.set('speak', speakOn); if (!speakOn) stopSpeaking(); refreshVoiceUI(); });
 for (const b of document.querySelectorAll('.lang button')) {
-  b.addEventListener('click', () => { lang = b.dataset.lang; store.set('lang', lang); renderStatic(); renderEra(); renderLog(); });
+  b.addEventListener('click', () => { lang = b.dataset.lang; store.set('lang', lang); stopSpeaking(); renderStatic(); renderEra(); renderLog(); refreshVoiceUI(); if (dict) { $('#mic').title = t('mic'); $('#mic').setAttribute('aria-label', t('mic')); } });
 }
 for (const b of document.querySelectorAll('.era-switch button')) {
   b.addEventListener('click', () => { era = b.dataset.era; selected = null; store.set('era', era); renderEra(); });
@@ -1065,4 +1236,5 @@ drawScene();
 renderStatic();
 renderEra();
 renderLog();
+refreshVoiceUI();
 </script>
