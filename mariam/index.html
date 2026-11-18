@@ -1,0 +1,1068 @@
+<title>Mariam of Bastakiya</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Visit Mariam's courtyard in Dubai on 2 December 1971 and 2071, and talk to her.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;600;700&family=Figtree:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap">
+<style>
+/* Layout: a courtyard in two halves. Mariam's world (scene, places, people) on the left, her voice (the chat) on the right. Stacks on phones. */
+:root {
+  --bg: #eceeea;
+  --surface: #fbfbf8;
+  --surface-2: #e2e5df;
+  --ink: #1c2230;
+  --muted: #586070;
+  --line: #d0d4cc;
+  --saffron: #9a5f12;
+  --saffron-soft: #f3e2c4;
+  --saffron-ink: #ffffff;
+  --creek: #1b6870;
+  --creek-soft: #d7e9ea;
+  --dusk: #4c3ac4;
+  --user: #1b6870;
+  --user-ink: #f3fbfb;
+  --focus: #4c3ac4;
+
+  --display: "Reem Kufi", "Segoe UI", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11141b; --surface: #191e28; --surface-2: #232a36; --ink: #ece7dd; --muted: #a2a8b5; --line: #2f3644;
+    --saffron: #e7a644; --saffron-soft: #3a2c16; --saffron-ink: #1b1206; --creek: #5bb8c1; --creek-soft: #18363a;
+    --dusk: #a597ff; --user: #2a6a72; --user-ink: #eefafa; --focus: #a597ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11141b; --surface: #191e28; --surface-2: #232a36; --ink: #ece7dd; --muted: #a2a8b5; --line: #2f3644;
+  --saffron: #e7a644; --saffron-soft: #3a2c16; --saffron-ink: #1b1206; --creek: #5bb8c1; --creek-soft: #18363a;
+  --dusk: #a597ff; --user: #2a6a72; --user-ink: #eefafa; --focus: #a597ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.page { max-width: 1240px; margin: 0 auto; display: grid; gap: 20px; }
+
+/* ---------- Header ---------- */
+.masthead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+.who { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.meem {
+  flex: none; width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--saffron-soft); color: var(--saffron);
+  font-family: var(--display); font-size: 2.7rem; line-height: 1;
+  border: 1px solid color-mix(in srgb, var(--saffron) 35%, transparent);
+}
+.who h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: var(--step-3); line-height: 1; letter-spacing: 0.005em; text-wrap: balance; }
+.who h1 .ar { font-weight: 500; color: var(--saffron); margin-inline-start: 0.25em; font-size: 0.8em; }
+.who .facts { margin: 6px 0 0; color: var(--muted); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.lang button { border: 0; background: none; padding: 5px 12px; border-radius: 999px; font-size: var(--step--1); font-weight: 600; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.intro { margin: 0; max-width: 68ch; font-size: var(--step-1); line-height: 1.5; text-wrap: pretty; }
+
+/* ---------- Two columns ---------- */
+.columns { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 900px) {
+  .columns { grid-template-columns: minmax(0, 1fr); }
+  .world { display: contents; }
+  .scene-wrap { order: 1; } .chat { order: 2; } .letter { order: 3; } .people-sec { order: 4; }
+}
+.world { display: grid; gap: 18px; min-width: 0; }
+
+/* ---------- Era switch ---------- */
+.era-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.era-switch { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; }
+.era-switch button {
+  border: 0; background: none; border-radius: 10px; padding: 8px 14px; text-align: start; line-height: 1.2;
+  display: grid; gap: 2px;
+}
+.era-switch .yr { font-family: var(--display); font-size: var(--step-1); font-weight: 600; }
+.era-switch .tm { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
+.era-switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.era-switch button[aria-pressed="true"] .tm { color: color-mix(in srgb, var(--bg) 75%, transparent); }
+.era-note { margin: 0; color: var(--muted); font-size: var(--step--1); }
+
+/* ---------- Scene ---------- */
+.scene {
+  position: relative; width: 100%; max-width: 100%; aspect-ratio: 1200 / 620;
+  border-radius: 18px; overflow: hidden; background: #cfe3e6;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgba(10, 12, 30, 0.55);
+}
+.scene svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.scene .e71, .scene .e21 { transition: opacity 0.9s ease; }
+.scene[data-era="2071"] .e71 { opacity: 0; }
+.scene[data-era="1971"] .e21 { opacity: 0; }
+.scene .burst { transform-box: fill-box; transform-origin: center; animation: burst 3.6s ease-out infinite; opacity: 0; }
+@keyframes burst { 0% { transform: scale(0.15); opacity: 0; } 8% { opacity: 1; } 45% { transform: scale(1); opacity: 0.95; } 70% { opacity: 0; } 100% { transform: scale(1.05); opacity: 0; } }
+.scene .nova { animation: bob 3s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+.scene .holo { animation: flicker 4s ease-in-out infinite; }
+@keyframes flicker { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.7; } }
+.scene .steam { animation: steam 3s ease-in-out infinite; }
+@keyframes steam { 0% { transform: translateY(6px); opacity: 0; } 40% { opacity: 0.6; } 100% { transform: translateY(-24px); opacity: 0; } }
+
+.spot {
+  position: absolute; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; border-radius: 50%; padding: 0;
+  border: 2px solid #fff; background: rgba(154, 95, 18, 0.92);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  display: grid; place-items: center;
+}
+.spot::before {
+  content: ""; position: absolute; inset: -8px; border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8); animation: ping 2.4s ease-out infinite;
+}
+.spot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+.scene[data-era="2071"] .spot { background: rgba(76, 58, 196, 0.92); }
+.spot[aria-pressed="true"] { background: #fff; }
+.spot[aria-pressed="true"]::after { background: var(--saffron); }
+.scene[data-era="2071"] .spot[aria-pressed="true"]::after { background: #4c3ac4; }
+.spot .tip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; padding: 4px 10px; border-radius: 8px;
+  background: rgba(16, 14, 30, 0.88); color: #fff; font-size: 0.8125rem; font-weight: 600;
+  pointer-events: none; opacity: 0; transition: opacity 0.15s;
+}
+.spot:hover .tip, .spot:focus-visible .tip { opacity: 1; }
+@keyframes ping { 0% { transform: scale(0.7); opacity: 0.9; } 80%, 100% { transform: scale(1.35); opacity: 0; } }
+@media (max-width: 560px) { .spot { width: 28px; height: 28px; } .spot .tip { display: none; } }
+
+/* ---------- Place card ---------- */
+.place {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 18px 20px; display: grid; gap: 8px;
+}
+.place .eyebrow { margin: 0; font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--saffron); font-weight: 600; }
+.scene-wrap[data-era="2071"] .place .eyebrow { color: var(--dusk); }
+.place h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: var(--step-2); line-height: 1.15; text-wrap: balance; }
+.place p.say { margin: 0; max-width: 62ch; font-size: var(--step-1); line-height: 1.5; }
+.place p.say::before { content: "“"; color: var(--saffron); font-family: var(--display); margin-inline-end: 2px; }
+.place p.say::after { content: "”"; color: var(--saffron); font-family: var(--display); margin-inline-start: 2px; }
+.place .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.btn {
+  border: 0; border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 0.9375rem;
+  background: var(--saffron); color: var(--saffron-ink);
+}
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.scene-wrap { display: grid; gap: 14px; }
+
+/* ---------- The letter ---------- */
+.letter {
+  position: relative; background: var(--saffron-soft); border-radius: 14px; padding: 18px 22px 16px;
+  border: 1px dashed color-mix(in srgb, var(--saffron) 45%, transparent);
+}
+.letter .label { margin: 0 0 4px; font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--saffron); font-weight: 600; }
+.letter blockquote { margin: 0; font-family: var(--hand); font-size: 1.6rem; line-height: 1.25; font-weight: 500; }
+.letter .sig { display: block; margin-top: 6px; font-size: 1.35rem; text-align: end; }
+
+/* ---------- People ---------- */
+.section-title { margin: 6px 0 0; font-family: var(--display); font-weight: 600; font-size: var(--step-2); }
+.section-sub { margin: 0; color: var(--muted); }
+.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+.person {
+  width: 100%; height: 100%; text-align: start; display: grid; gap: 4px; align-content: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
+}
+.person:hover { border-color: color-mix(in srgb, var(--saffron) 50%, var(--line)); }
+.person .nm { font-weight: 700; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.person .yr { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.person .role { font-size: var(--step--1); color: var(--creek); font-weight: 600; }
+.person .line { font-size: 0.9375rem; color: var(--muted); }
+.person .ask { font-size: var(--step--1); font-weight: 600; color: var(--saffron); margin-top: 4px; }
+
+/* ---------- Chat ---------- */
+.chat {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0;
+  height: min(780px, calc(100dvh - 32px));
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden;
+}
+@media (max-width: 900px) { .chat { position: static; height: min(640px, 82dvh); } }
+.chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.chat-head .meem { width: 42px; height: 42px; font-size: 1.8rem; }
+.meem span { display: block; transform: translateY(-0.2em); }
+.chat-head .t { min-width: 0; flex: 1; }
+.chat-head .t b { display: block; font-family: var(--display); font-weight: 600; font-size: var(--step-1); line-height: 1.2; }
+.chat-head .t span { display: block; font-size: var(--step--1); color: var(--muted); }
+.chat-head .reset { border: 1px solid var(--line); background: none; border-radius: 999px; padding: 5px 12px; font-size: var(--step--1); color: var(--muted); }
+.log { overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; overscroll-behavior: contain; }
+.msg { max-width: 88%; display: grid; gap: 4px; }
+.msg .bubble { padding: 10px 14px; border-radius: 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg.m { align-self: flex-start; }
+.msg.m .bubble { background: var(--surface-2); border-bottom-left-radius: 4px; }
+.msg.u { align-self: flex-end; }
+.msg.u .bubble { background: var(--user); color: var(--user-ink); border-bottom-right-radius: 4px; }
+.msg.pending .bubble { color: var(--muted); font-style: italic; }
+.msg.pending .bubble::after { content: ""; display: inline-block; width: 1.2em; text-align: start; animation: dots 1.2s steps(4) infinite; }
+@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+.msg .listen { justify-self: start; border: 0; background: none; padding: 0 4px; font-size: var(--step--1); color: var(--creek); font-weight: 600; }
+.note { align-self: center; max-width: 92%; text-align: center; font-size: var(--step--1); color: var(--muted); background: var(--creek-soft); border-radius: 10px; padding: 8px 12px; }
+.chat-foot { border-top: 1px solid var(--line); padding: 10px 12px 12px; display: grid; gap: 10px; }
+.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+.chip { flex: none; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 6px 12px; font-size: var(--step--1); font-weight: 600; color: var(--ink); }
+.chip:hover { border-color: var(--saffron); }
+.compose { display: flex; gap: 8px; align-items: flex-end; }
+.compose textarea {
+  flex: 1; min-width: 0; resize: none; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px;
+  font: inherit; color: var(--ink); background: var(--bg); max-height: 140px; line-height: 1.4;
+}
+.compose textarea:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+.compose .btn { flex: none; padding: 10px 18px; }
+.offline { margin: 0; font-size: var(--step--1); color: var(--muted); }
+
+footer { color: var(--muted); font-size: var(--step--1); max-width: 72ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .scene .burst { opacity: 0.85; transform: none; }
+}
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="who">
+      <div class="meem" aria-hidden="true"><span>م</span></div>
+      <div>
+        <h1>Mariam<span class="ar" lang="ar">مريم</span></h1>
+        <p class="facts" id="facts"></p>
+      </div>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="langEn" data-lang="en">EN</button>
+      <button type="button" id="langDe" data-lang="de">DE</button>
+    </div>
+  </header>
+  <p class="intro" id="intro"></p>
+
+  <div class="columns">
+    <main class="world">
+      <section class="scene-wrap" id="sceneWrap" data-era="1971" aria-labelledby="placeTitle">
+        <div class="era-bar">
+          <div class="era-switch" role="group" id="eraGroup">
+            <button type="button" id="era1971" data-era="1971"><span class="yr">1971</span><span class="tm" id="tm1971"></span></button>
+            <button type="button" id="era2071" data-era="2071"><span class="yr">2071</span><span class="tm" id="tm2071"></span></button>
+          </div>
+          <p class="era-note" id="eraNote"></p>
+        </div>
+
+        <div class="scene" id="scene" data-era="1971">
+          <svg viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" role="img" id="sceneSvg">
+            <defs>
+              <linearGradient id="sky71" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#7db4d4"/>
+                <stop offset="0.55" stop-color="#cfe2e2"/>
+                <stop offset="1" stop-color="#f3ddb2"/>
+              </linearGradient>
+              <linearGradient id="sky21" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#110c2e"/>
+                <stop offset="0.45" stop-color="#34205f"/>
+                <stop offset="0.78" stop-color="#8e3f78"/>
+                <stop offset="1" stop-color="#e98458"/>
+              </linearGradient>
+              <linearGradient id="ground71" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e6cf9f"/>
+                <stop offset="1" stop-color="#d8bb83"/>
+              </linearGradient>
+              <linearGradient id="ground21" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3a2b55"/>
+                <stop offset="1" stop-color="#1a1330"/>
+              </linearGradient>
+              <linearGradient id="wallLit" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#ffb27a" stop-opacity="0.55"/>
+                <stop offset="1" stop-color="#2a1d4a" stop-opacity="0.65"/>
+              </linearGradient>
+              <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#fffbe8"/>
+                <stop offset="0.45" stop-color="#fff2c4" stop-opacity="0.9"/>
+                <stop offset="1" stop-color="#fff2c4" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="brass" cx="0.35" cy="0.3" r="0.8">
+                <stop offset="0" stop-color="#fff1b8"/>
+                <stop offset="0.4" stop-color="#d9a441"/>
+                <stop offset="1" stop-color="#7a5317"/>
+              </radialGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Sky -->
+            <rect class="e71" width="1200" height="620" fill="url(#sky71)"/>
+            <rect class="e21" width="1200" height="620" fill="url(#sky21)"/>
+
+            <!-- 1971 distance: sun, Deira rooftops, dhow -->
+            <g class="e71">
+              <circle cx="1060" cy="92" r="90" fill="url(#sun)"/>
+              <circle cx="1060" cy="92" r="30" fill="#fffbea"/>
+              <g fill="#ffffff" opacity="0.7">
+                <ellipse cx="220" cy="90" rx="70" ry="14"/><ellipse cx="270" cy="80" rx="46" ry="12"/>
+                <ellipse cx="760" cy="60" rx="60" ry="11"/>
+              </g>
+              <g fill="#d6b98a" id="deira"></g>
+              <g transform="translate(985 220)">
+                <line x1="62" y1="0" x2="62" y2="150" stroke="#6b4a2a" stroke-width="5"/>
+                <path d="M62 8 L140 140 L10 140 Z" fill="#f6efe0" stroke="#c9b48e" stroke-width="2"/>
+                <path d="M62 8 L10 140" stroke="#6b4a2a" stroke-width="3"/>
+              </g>
+            </g>
+
+            <!-- 2071 distance: stars, towers, skyway, fireworks -->
+            <g class="e21">
+              <g id="stars" fill="#ffffff"></g>
+              <g id="fireworks"></g>
+              <g id="towers"></g>
+              <path d="M-20 205 C 260 150, 520 235, 760 185 S 1080 150, 1230 175" fill="none" stroke="#5ff2ff" stroke-width="5" filter="url(#glow)" opacity="0.95"/>
+              <path d="M-20 214 C 260 159, 520 244, 760 194 S 1080 159, 1230 184" fill="none" stroke="#5ff2ff" stroke-width="1.5" opacity="0.5"/>
+              <g id="skyLights" fill="#fff7d6"></g>
+            </g>
+
+            <!-- Back wall with arch to the lane -->
+            <g>
+              <path d="M560 372 H1200 V482 H560 Z M652 482 V430 Q697 382 742 430 V482 Z" fill="#dcc08f" fill-rule="evenodd"/>
+              <rect x="560" y="364" width="640" height="10" fill="#c9a874"/>
+              <g class="e71">
+                <path d="M652 482 V430 Q697 382 742 430 V482 Z" fill="#7fb7c6"/>
+                <rect x="652" y="455" width="90" height="27" fill="#4f93a6"/>
+                <path d="M668 458 h48 l-6 8 h-36 z" fill="#7a5230"/>
+              </g>
+              <g class="e21">
+                <path d="M560 372 H1200 V482 H560 Z M652 482 V430 Q697 382 742 430 V482 Z" fill="url(#wallLit)" fill-rule="evenodd"/>
+                <path d="M652 482 V430 Q697 382 742 430 V482 Z" fill="#ffcf7a" opacity="0.85"/>
+              </g>
+            </g>
+
+            <!-- Hologram 2071 -->
+            <g class="e21"><g class="holo" filter="url(#glow)">
+              <text x="790" y="268" text-anchor="middle" font-family="Reem Kufi, sans-serif" font-size="92" font-weight="700" fill="#7ff6ff" opacity="0.9">100</text>
+              <text x="790" y="300" text-anchor="middle" font-family="Figtree, sans-serif" font-size="20" font-weight="600" fill="#c9fbff" letter-spacing="4">1971 – 2071</text>
+              <path d="M720 318 L860 318" stroke="#7ff6ff" stroke-width="2" opacity="0.6"/>
+            </g></g>
+
+            <!-- House with barjeel -->
+            <g id="house">
+              <rect x="60" y="250" width="520" height="232" fill="#e5cb9c"/>
+              <rect x="60" y="250" width="520" height="232" fill="#c9a874" opacity="0.18"/>
+              <g fill="#e5cb9c" id="crenels"></g>
+              <rect x="60" y="250" width="520" height="8" fill="#c9a874"/>
+              <!-- barjeel -->
+              <rect x="368" y="96" width="100" height="160" fill="#e9d2a6"/>
+              <rect x="368" y="96" width="100" height="160" fill="#b99764" opacity="0.15"/>
+              <g fill="#5a3b22">
+                <rect x="380" y="112" width="14" height="64" rx="2"/>
+                <rect x="411" y="112" width="14" height="64" rx="2"/>
+                <rect x="442" y="112" width="14" height="64" rx="2"/>
+              </g>
+              <rect x="362" y="88" width="112" height="10" fill="#c9a874"/>
+              <g fill="#e9d2a6"><rect x="362" y="76" width="16" height="13"/><rect x="392" y="76" width="16" height="13"/><rect x="428" y="76" width="16" height="13"/><rect x="458" y="76" width="16" height="13"/></g>
+              <line x1="368" y1="186" x2="468" y2="186" stroke="#8a6a3a" stroke-width="5"/>
+              <!-- door -->
+              <path d="M160 482 V378 Q197 350 234 378 V482 Z" fill="#7a4f2a"/>
+              <path d="M197 362 V482" stroke="#5a381c" stroke-width="3"/>
+              <g fill="#d9a441" id="studs"></g>
+              <!-- window lattice -->
+              <rect x="400" y="320" width="74" height="68" fill="#5a3b22"/>
+              <g stroke="#c49a5a" stroke-width="3">
+                <line x1="418" y1="320" x2="418" y2="388"/><line x1="437" y1="320" x2="437" y2="388"/><line x1="456" y1="320" x2="456" y2="388"/>
+                <line x1="400" y1="342" x2="474" y2="342"/><line x1="400" y1="365" x2="474" y2="365"/>
+              </g>
+              <rect x="94" y="300" width="36" height="46" rx="18" fill="#5a3b22"/>
+              <rect x="514" y="300" width="36" height="46" rx="18" fill="#5a3b22"/>
+              <!-- 2071 lighting on the house -->
+              <g class="e21">
+                <rect x="60" y="250" width="520" height="232" fill="url(#wallLit)"/>
+                <rect x="368" y="76" width="106" height="180" fill="url(#wallLit)"/>
+                <rect x="400" y="320" width="74" height="68" fill="#ffcf7a" opacity="0.55"/>
+                <rect x="94" y="300" width="36" height="46" rx="18" fill="#ffcf7a" opacity="0.5"/>
+                <rect x="514" y="300" width="36" height="46" rx="18" fill="#ffcf7a" opacity="0.5"/>
+              </g>
+            </g>
+
+            <!-- Ground -->
+            <rect class="e71" x="0" y="480" width="1200" height="140" fill="url(#ground71)"/>
+            <g class="e21">
+              <rect x="0" y="480" width="1200" height="140" fill="url(#ground21)"/>
+              <g stroke="#6b5a9a" stroke-width="1" opacity="0.45" id="paving"></g>
+            </g>
+            <ellipse cx="480" cy="488" rx="28" ry="6" class="e71" fill="#c9ab76"/>
+
+            <!-- Palm 1971 -->
+            <g class="e71" id="palm71"></g>
+            <!-- Palm 2071 -->
+            <g class="e21" id="palm21"></g>
+
+            <!-- 1971 props: dallah, capsule with radio -->
+            <g class="e71">
+              <g transform="translate(262 438)">
+                <ellipse cx="0" cy="44" rx="26" ry="5" fill="#000" opacity="0.15"/>
+                <path d="M-18 40 Q-24 14 -10 4 L10 4 Q24 14 18 40 Z" fill="url(#brass)"/>
+                <path d="M-8 4 Q-10 -8 0 -12 Q10 -8 8 4 Z" fill="url(#brass)"/>
+                <path d="M0 -12 L0 -24" stroke="#b98a35" stroke-width="3"/><circle cx="0" cy="-26" r="4" fill="#d9a441"/>
+                <path d="M-14 12 Q-38 4 -42 -14 Q-34 -6 -20 4" fill="none" stroke="#b98a35" stroke-width="5" stroke-linecap="round"/>
+                <path d="M16 8 Q32 14 18 34" fill="none" stroke="#8a6224" stroke-width="4"/>
+              </g>
+              <g transform="translate(818 432)">
+                <ellipse cx="0" cy="50" rx="56" ry="8" fill="#000" opacity="0.15"/>
+                <path d="M-30 30 L-42 50 M30 30 L42 50" stroke="#7a5317" stroke-width="6" stroke-linecap="round"/>
+                <circle r="42" fill="url(#brass)"/>
+                <circle cx="-6" cy="-8" r="20" fill="#bfefff" opacity="0.8" stroke="#7a5317" stroke-width="4"/>
+                <path d="M-42 0 H42" stroke="#7a5317" stroke-width="3" opacity="0.6"/>
+                <g transform="translate(-20 -62)">
+                  <rect width="40" height="26" rx="5" fill="#6d3f22"/>
+                  <circle cx="12" cy="13" r="7" fill="#d9c9a3"/><rect x="24" y="7" width="10" height="3" fill="#d9c9a3"/><rect x="24" y="13" width="10" height="3" fill="#d9c9a3"/>
+                  <line x1="34" y1="0" x2="44" y2="-16" stroke="#444" stroke-width="2"/>
+                </g>
+              </g>
+            </g>
+
+            <!-- 2071 props: display case, steaming capsule, NOVA -->
+            <g class="e21">
+              <g transform="translate(300 392)">
+                <rect x="-6" y="70" width="112" height="20" fill="#2a2148"/>
+                <rect x="0" y="0" width="100" height="72" fill="#bff6ff" opacity="0.18" stroke="#9feeff" stroke-width="2"/>
+                <rect x="26" y="40" width="48" height="28" rx="3" fill="#8f97a3"/>
+                <rect x="26" y="40" width="48" height="8" fill="#a9b0bb"/>
+                <path d="M36 14 h30 v22 h-30 z" fill="#f4e6c4" transform="rotate(-6 50 25)"/>
+                <path d="M8 6 L24 6" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+              </g>
+              <g transform="translate(818 432)">
+                <path d="M-30 30 L-42 50 M30 30 L42 50" stroke="#7a5317" stroke-width="6" stroke-linecap="round"/>
+                <circle r="42" fill="url(#brass)"/>
+                <circle cx="-6" cy="-8" r="20" fill="#bfefff" opacity="0.8" stroke="#7a5317" stroke-width="4"/>
+                <g fill="#ffffff">
+                  <circle class="steam" cx="-10" cy="-50" r="10" opacity="0.4"/>
+                  <circle class="steam" cx="12" cy="-56" r="8" opacity="0.4" style="animation-delay:1s"/>
+                  <circle class="steam" cx="0" cy="-48" r="7" opacity="0.4" style="animation-delay:2s"/>
+                </g>
+              </g>
+              <g class="nova">
+                <g transform="translate(620 300)" filter="url(#glow)">
+                  <ellipse cx="0" cy="0" rx="34" ry="9" fill="none" stroke="#7cf7d4" stroke-width="3"/>
+                  <circle r="20" fill="#e9fffb"/>
+                  <rect x="-11" y="-5" width="22" height="9" rx="4.5" fill="#0d2a3a"/>
+                  <circle cx="-5" cy="-0.5" r="2.4" fill="#7cf7d4"/><circle cx="5" cy="-0.5" r="2.4" fill="#7cf7d4"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <div id="spots"></div>
+        </div>
+
+        <article class="place" aria-live="polite">
+          <p class="eyebrow" id="placeEyebrow"></p>
+          <h2 id="placeTitle"></h2>
+          <p class="say" id="placeText"></p>
+          <div class="actions">
+            <button type="button" class="btn" id="placeAsk"></button>
+          </div>
+        </article>
+      </section>
+
+      <section class="letter" aria-labelledby="letterLabel">
+        <p class="label" id="letterLabel"></p>
+        <blockquote id="letterText"></blockquote>
+      </section>
+
+      <section class="people-sec" aria-labelledby="peopleTitle" style="display:grid;gap:10px">
+        <h2 class="section-title" id="peopleTitle"></h2>
+        <p class="section-sub" id="peopleSub"></p>
+        <ul class="people" id="people"></ul>
+      </section>
+    </main>
+
+    <aside class="chat" aria-labelledby="chatTitle">
+      <div class="chat-head">
+        <div class="meem" aria-hidden="true"><span>م</span></div>
+        <div class="t"><b id="chatTitle"></b><span id="chatSub"></span></div>
+        <button type="button" class="reset" id="reset"></button>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <div class="chat-foot">
+        <div class="chips" id="chips"></div>
+        <form class="compose" id="compose">
+          <label for="input" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label>
+          <textarea id="input" rows="1" maxlength="600"></textarea>
+          <button type="submit" class="btn" id="send"></button>
+        </form>
+        <p class="offline" id="offline" hidden></p>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+'use strict';
+
+/* ================= Content ================= */
+const TXT = {
+  en: {
+    facts: '12 years old · Al Bastakiya, Dubai · 2 December 1971',
+    intro: 'This afternoon Mariam travelled a hundred years into the future to see her country turn one hundred, and she was home in time for dinner. Now it is just after midnight and she is too excited to sleep. Look around her courtyard on both days, then talk to her.',
+    tm1971: '2 Dec · 12:04', tm2071: '2 Dec · 19:52',
+    note1971: 'Today six emirates become one country.',
+    note2071: 'Eight minutes until the fireworks.',
+    eraLabel: 'Choose a day',
+    ask: 'Ask Mariam about this',
+    askName: (n) => 'Ask Mariam about ' + n,
+    letterLabel: 'The letter she buried this morning',
+    letter: 'To the people in 100 years: today we become a country. I don’t know how you live, whether you can fly or live on the moon. But I invite you: celebrate with us!',
+    letterSig: '– Mariam, age 12, Dubai, 2 December 1971',
+    peopleTitle: 'The people in her day',
+    peopleSub: 'Everyone who helped her get the time capsule running. Tap someone to ask Mariam about them.',
+    chatTitle: 'Talk to Mariam',
+    chatSub: 'On the roof, next to the wind tower',
+    reset: 'Start over',
+    send: 'Send',
+    stop: 'Stop',
+    placeholder: 'Write to Mariam…',
+    thinking: 'Mariam is thinking',
+    listen: '▶ Listen', listening: '■ Stop',
+    offline: 'Mariam answers your own questions when this page is opened in Claude. Here she can tell you about the places, the people and the questions above.',
+    offlineNote: 'Mariam can only answer typed questions when this page is opened in Claude. Try a question chip or tap a place in her courtyard.',
+    errBusy: 'Mariam needs a moment. Try again in a minute.',
+    errDrop: 'The connection dropped. Send your message again.',
+    errRefused: 'Mariam did not answer that one. Try asking something else.',
+    errSignin: 'Sign in to Claude again, then send your message.',
+    foot: 'Mariam is a fictional character from “The Invitation”, a story game about Dubai in 1971 and 2071. Her answers are written live by Claude and stay in her voice; she only knows her own day and the few hours she saw of 2071.',
+    greeting: 'Marhaba! I’m Mariam. I can’t sleep, so I climbed up to the roof next to our wind tower. Today I went a hundred years into the future and still made it back for Grandma’s dinner. Ask me anything!',
+    chips: [
+      { q: 'Who are you?', a: 'I’m Mariam, I’m twelve, and I live in Al Bastakiya with my grandma Fatima, right by the Creek. Our house has a barjeel that keeps it cool, and Grandpa’s date palm grows in the courtyard. And since today I’m also a time traveller.' },
+      { q: 'What happened today?', a: 'At noon a time capsule landed in our courtyard with an invitation from 2071! It needed a pearl and a copper coil, so I traded dates for cardamom, Grandma made gahwa, Abu Ali gave me his last pearl for it, and Khalid wound me a coil. Then Grandpa’s radio said six emirates had become one country, and whoosh, I was in 2071.' },
+      { q: 'What was 2071 like?', a: 'Our courtyard was still there, and the wind tower too, but behind it there were towers so tall the clouds got stuck on them. A floating robot called NOVA met me, and I ran across a road over the rooftops to see the fireworks. Everybody was celebrating a hundred years of our country.' },
+      { q: 'Why did you write a letter?', a: 'Because today our country is born, and I wanted the people in a hundred years to celebrate with us. I didn’t think anyone would ever read it. Then my own great-granddaughter Noor did, and she invited me back!' },
+      { q: 'Who is Noor?', a: 'Noor is my great-granddaughter. She found my letter in 2070 and sent the time capsule for me. When I thanked her for the invitation she said, really, you invited us first.' },
+    ],
+  },
+  de: {
+    facts: '12 Jahre · Al Bastakiya, Dubai · 2. Dezember 1971',
+    intro: 'Heute Nachmittag ist Mariam hundert Jahre in die Zukunft gereist, um den hundertsten Geburtstag ihres Landes zu sehen, und war trotzdem pünktlich zum Abendessen zurück. Jetzt ist es kurz nach Mitternacht und sie kann vor Aufregung nicht schlafen. Schau dich an beiden Tagen in ihrem Innenhof um und sprich dann mit ihr.',
+    tm1971: '2. Dez. · 12:04', tm2071: '2. Dez. · 19:52',
+    note1971: 'Heute werden sechs Emirate ein Land.',
+    note2071: 'Noch acht Minuten bis zum Feuerwerk.',
+    eraLabel: 'Wähle einen Tag',
+    ask: 'Mariam danach fragen',
+    askName: (n) => 'Mariam nach ' + n + ' fragen',
+    letterLabel: 'Der Brief, den sie heute Morgen vergraben hat',
+    letter: 'An die Menschen in 100 Jahren: Heute werden wir ein Land. Ich weiß nicht, wie ihr lebt, ob ihr fliegen könnt oder auf dem Mond wohnt. Aber ich lade euch ein: Feiert mit uns!',
+    letterSig: '– Mariam, 12 Jahre, Dubai, 2. Dezember 1971',
+    peopleTitle: 'Die Menschen in ihrem Tag',
+    peopleSub: 'Alle, die ihr geholfen haben, die Zeitkapsel zum Laufen zu bringen. Tippe jemanden an, um Mariam nach ihm oder ihr zu fragen.',
+    chatTitle: 'Sprich mit Mariam',
+    chatSub: 'Auf dem Dach, neben dem Windturm',
+    reset: 'Neu anfangen',
+    send: 'Senden',
+    stop: 'Stopp',
+    placeholder: 'Schreib Mariam…',
+    thinking: 'Mariam überlegt',
+    listen: '▶ Anhören', listening: '■ Stopp',
+    offline: 'Auf eigene Fragen antwortet Mariam, wenn diese Seite in Claude geöffnet ist. Hier erzählt sie dir von den Orten, den Menschen und den Fragen oben.',
+    offlineNote: 'Auf getippte Fragen antwortet Mariam nur, wenn diese Seite in Claude geöffnet ist. Probier eine der Fragen oder tippe einen Ort im Innenhof an.',
+    errBusy: 'Mariam braucht einen Moment. Versuch es in einer Minute noch einmal.',
+    errDrop: 'Die Verbindung ist abgerissen. Schick deine Nachricht noch einmal.',
+    errRefused: 'Darauf hat Mariam nicht geantwortet. Frag sie etwas anderes.',
+    errSignin: 'Melde dich erneut bei Claude an und schick dann deine Nachricht.',
+    foot: 'Mariam ist eine erfundene Figur aus „Die Einladung“, einem Story-Spiel über Dubai 1971 und 2071. Ihre Antworten schreibt Claude live in ihrer Stimme; sie kennt nur ihren eigenen Tag und die wenigen Stunden, die sie von 2071 gesehen hat.',
+    greeting: 'Marhaba! Ich bin Mariam. Ich kann nicht schlafen, also bin ich aufs Dach geklettert, neben unseren Windturm. Heute war ich hundert Jahre in der Zukunft und war trotzdem pünktlich zu Großmutters Abendessen zurück. Frag mich, was du willst!',
+    chips: [
+      { q: 'Wer bist du?', a: 'Ich bin Mariam, zwölf Jahre alt, und wohne mit meiner Großmutter Fatima in Al Bastakiya, direkt am Creek. Unser Haus hat einen Barjeel, der es kühl hält, und im Innenhof wächst Großvaters Dattelpalme. Und seit heute bin ich auch Zeitreisende.' },
+      { q: 'Was ist heute passiert?', a: 'Mittags ist eine Zeitkapsel in unserem Innenhof gelandet, mit einer Einladung aus 2071! Sie brauchte eine Perle und eine Kupferspule. Also habe ich Datteln gegen Kardamom getauscht, Großmutter hat Gahwa gekocht, Abu Ali hat mir dafür seine letzte Perle gegeben und Khalid hat mir eine Spule gewickelt. Dann sagte Großvaters Radio, dass sechs Emirate jetzt ein Land sind, und schwupp, war ich in 2071.' },
+      { q: 'Wie war 2071?', a: 'Unser Innenhof war noch da und der Windturm auch, aber dahinter standen Türme, so hoch, dass die Wolken daran hängen blieben. Ein schwebender Roboter namens NOVA hat mich abgeholt, und ich bin über eine Straße auf den Dächern zum Feuerwerk gerannt. Alle haben hundert Jahre unser Land gefeiert.' },
+      { q: 'Warum hast du einen Brief geschrieben?', a: 'Weil heute unser Land geboren wird und ich wollte, dass die Menschen in hundert Jahren mit uns feiern. Ich dachte nicht, dass ihn je jemand liest. Und dann hat ausgerechnet meine Urenkelin Noor ihn gefunden und mich eingeladen!' },
+      { q: 'Wer ist Noor?', a: 'Noor ist meine Urenkelin. Sie hat meinen Brief 2070 gefunden und mir die Zeitkapsel geschickt. Als ich mich für die Einladung bedankt habe, sagte sie: Eigentlich hast du uns zuerst eingeladen.' },
+    ],
+  },
+};
+
+/* Places: x/y in the 1200×620 scene. */
+const PLACES = {
+  1971: [
+    { id: 'barjeel', x: 418, y: 140,
+      en: { t: 'Our barjeel', s: 'The wind tower catches the breeze off the sea and pushes it down into the house, so it stays cool even at noon. This morning I buried a tin box under it with a letter for whoever lives here in a hundred years.', q: 'Why did you bury a letter under the wind tower?' },
+      de: { t: 'Unser Barjeel', s: 'Der Windturm fängt die Brise vom Meer und schickt sie hinunter ins Haus, so bleibt es sogar mittags kühl. Heute Morgen habe ich darunter eine Blechdose vergraben, mit einem Brief für die, die hier in hundert Jahren wohnen.', q: 'Warum hast du einen Brief unter dem Windturm vergraben?' } },
+    { id: 'palm', x: 935, y: 300,
+      en: { t: 'Grandpa’s date palm', s: 'Grandpa planted it the day Mama was born. Grandma says its dates are the sweetest in Bastakiya, and Yusuf in the souk agrees. I traded a basket of them for cardamom today.', q: 'Tell me about your grandpa’s palm.' },
+      de: { t: 'Großvaters Dattelpalme', s: 'Großvater hat sie an dem Tag gepflanzt, an dem Mama geboren wurde. Großmutter sagt, ihre Datteln sind die süßesten in Bastakiya, und Yusuf im Souk sieht das genauso. Heute habe ich einen Korb davon gegen Kardamom getauscht.', q: 'Erzähl mir von Großvaters Palme.' } },
+    { id: 'souk', x: 697, y: 418,
+      en: { t: 'The lane to the souk', s: 'Through this lane you reach the souk, under its roof of palm fronds. It smells of cinnamon and frankincense, Yusuf sells cardamom from India and Khalid hammers copper. Today every trader is hanging up the new flags.', q: 'What is the souk like today?' },
+      de: { t: 'Die Gasse zum Souk', s: 'Durch diese Gasse kommst du zum Souk mit seinem Dach aus Palmwedeln. Es riecht nach Zimt und Weihrauch, Yusuf verkauft Kardamom aus Indien und Khalid hämmert Kupfer. Heute hängen alle Händler die neuen Fahnen auf.', q: 'Wie ist der Souk heute?' } },
+    { id: 'creek', x: 1060, y: 300,
+      en: { t: 'The Creek and the dhows', s: 'Behind the wall is the Creek. Abras go back and forth to Deira all day, and big teak dhows sail to India and Africa. Old Abu Ali sits by the water and tells stories about forty summers of diving for pearls.', q: 'What did Abu Ali tell you about pearl diving?' },
+      de: { t: 'Der Creek und die Dhaus', s: 'Hinter der Mauer liegt der Creek. Den ganzen Tag fahren Abras hinüber nach Deira, und große Dhaus aus Teakholz segeln bis nach Indien und Afrika. Der alte Abu Ali sitzt am Wasser und erzählt von vierzig Sommern Perlentauchen.', q: 'Was hat Abu Ali dir vom Perlentauchen erzählt?' } },
+    { id: 'dallah', x: 262, y: 440,
+      en: { t: 'Grandma’s dallah', s: 'Grandma’s brass coffee pot. Her gahwa with cardamom is so good that Abu Ali gave me his very last pearl for one pot of it.', q: 'How does your grandma make gahwa?' },
+      de: { t: 'Großmutters Dallah', s: 'Großmutters Kaffeekanne aus Messing. Ihr Gahwa mit Kardamom ist so gut, dass Abu Ali mir für eine Kanne seine allerletzte Perle gegeben hat.', q: 'Wie kocht deine Großmutter Gahwa?' } },
+    { id: 'capsule', x: 818, y: 432,
+      en: { t: 'The time capsule', s: 'It landed here at noon with a flash, brass and glass and warm as an oven. It needed a pearl for a lens, a copper coil for a heart, and a voice from our time. That voice came out of Grandpa’s radio.', q: 'How did the time capsule work?' },
+      de: { t: 'Die Zeitkapsel', s: 'Sie ist mittags mit einem Blitz hier gelandet, aus Messing und Glas und warm wie ein Ofen. Sie brauchte eine Perle als Linse, eine Kupferspule als Herz und eine Stimme aus unserer Zeit. Die Stimme kam aus Großvaters Radio.', q: 'Wie hat die Zeitkapsel funktioniert?' } },
+  ],
+  2071: [
+    { id: 'towers', x: 170, y: 120,
+      en: { t: 'Towers in the clouds', s: 'Behind our house there were towers so tall the clouds got stuck on them, and every single window was glowing. I had to lean all the way back to see the tops.', q: 'What did Dubai look like in 2071?' },
+      de: { t: 'Türme in den Wolken', s: 'Hinter unserem Haus standen Türme, so hoch, dass die Wolken daran hängen blieben, und jedes einzelne Fenster leuchtete. Ich musste mich ganz weit nach hinten lehnen, um die Spitzen zu sehen.', q: 'Wie sah Dubai 2071 aus?' } },
+    { id: 'skyway', x: 560, y: 205,
+      en: { t: 'The Skyway', s: 'A glowing road right across the rooftops. The streets were packed, so I ran the whole way to Union Sky Plaza, jumping gaps and dodging drones, because the fireworks started at eight.', q: 'How did you get to the fireworks in time?' },
+      de: { t: 'Der Skyway', s: 'Eine leuchtende Straße quer über die Dächer. Die Straßen waren voll, also bin ich den ganzen Weg zur Union Sky Plaza gerannt, über Lücken gesprungen und Drohnen ausgewichen, weil das Feuerwerk um acht anfing.', q: 'Wie hast du es rechtzeitig zum Feuerwerk geschafft?' } },
+    { id: 'holo', x: 790, y: 240,
+      en: { t: '100 years', s: 'Light floating in the air with our country’s age on it: one hundred. This morning it was zero. That is the strangest thing I have ever seen, and I have seen a lot today.', q: 'What was the celebration like?' },
+      de: { t: '100 Jahre', s: 'Licht, das in der Luft schwebt, und darauf das Alter unseres Landes: hundert. Heute Morgen war es null. Das ist das Seltsamste, was ich je gesehen habe, und ich habe heute viel gesehen.', q: 'Wie war die Feier?' } },
+    { id: 'case', x: 350, y: 430,
+      en: { t: 'My letter, behind glass', s: 'They found my tin box in 2070 and put my letter in a glass case with a little sign: “Found 2070 beneath the wind tower.” My handwriting is in a museum now. I hope nobody checked my spelling.', q: 'How did it feel to see your own letter in 2071?' },
+      de: { t: 'Mein Brief, hinter Glas', s: 'Sie haben meine Blechdose 2070 gefunden und den Brief in eine Glasvitrine gelegt, mit einem kleinen Schild: „Gefunden 2070 unter dem Windturm.“ Meine Handschrift ist jetzt im Museum. Hoffentlich hat keiner die Rechtschreibung geprüft.', q: 'Wie war es, deinen eigenen Brief in 2071 zu sehen?' } },
+    { id: 'palm2', x: 968, y: 250,
+      en: { t: 'The same palm', s: 'Grandpa’s palm, a hundred years old and taller than the house. It was the first thing I recognised. Some things just keep growing.', q: 'What was still the same after 100 years?' },
+      de: { t: 'Dieselbe Palme', s: 'Großvaters Palme, hundert Jahre alt und höher als das Haus. Sie war das Erste, was ich wiedererkannt habe. Manche Dinge wachsen einfach weiter.', q: 'Was war nach 100 Jahren noch gleich?' } },
+    { id: 'nova', x: 620, y: 300,
+      en: { t: 'NOVA', s: 'A floating robot who talks! Noor sent her to meet me. She knew the time to the second and told me to run right, to the Skyway.', q: 'Who is NOVA?' },
+      de: { t: 'NOVA', s: 'Ein schwebender Roboter, der spricht! Noor hat sie geschickt, um mich abzuholen. Sie wusste die Uhrzeit auf die Sekunde und sagte, ich soll nach rechts laufen, zum Skyway.', q: 'Wer ist NOVA?' } },
+  ],
+};
+
+const DEFAULT_PLACE = {
+  1971: {
+    en: { e: 'Al Bastakiya · noon', t: 'Our courtyard', s: 'This is home. Coral-stone walls, Grandpa’s palm, and the wind tower humming in the breeze. Tap the glowing dots to look around.', q: 'What is your house like?' },
+    de: { e: 'Al Bastakiya · Mittag', t: 'Unser Innenhof', s: 'Das ist unser Zuhause. Mauern aus Korallenstein, Großvaters Palme und der Windturm, der in der Brise summt. Tippe auf die leuchtenden Punkte, um dich umzusehen.', q: 'Wie ist dein Zuhause?' } },
+  2071: {
+    en: { e: 'Al Bastakiya · evening', t: 'The same courtyard, 100 years later', s: 'Same walls, same wind tower, same palm. But the sky was full of light. Tap the dots to see what I saw.', q: 'What changed in 100 years, and what didn’t?' },
+    de: { e: 'Al Bastakiya · Abend', t: 'Derselbe Innenhof, 100 Jahre später', s: 'Dieselben Mauern, derselbe Windturm, dieselbe Palme. Aber der Himmel war voller Licht. Tippe auf die Punkte, um zu sehen, was ich gesehen habe.', q: 'Was hat sich in 100 Jahren verändert und was nicht?' } },
+};
+
+const PEOPLE = [
+  { id: 'fatima', yr: '1971',
+    en: { n: 'Grandma Fatima', r: 'Mariam’s grandmother', l: 'Makes the best gahwa in Bastakiya. She is never surprised for long, not even by a time machine.', a: 'Grandma Fatima raised me in this house. When I told her about the capsule she only said “Ya Allah”, and then she told me exactly what to do and not to be late. She gave me Grandpa’s radio too.' },
+    de: { n: 'Großmutter Fatima', r: 'Mariams Großmutter', l: 'Kocht den besten Gahwa in Bastakiya. Sie ist nie lange überrascht, nicht einmal von einer Zeitmaschine.', a: 'Großmutter Fatima hat mich in diesem Haus großgezogen. Als ich ihr von der Kapsel erzählt habe, sagte sie nur „Ya Allah“, und dann wusste sie genau, was zu tun ist, und dass ich nicht zu spät kommen darf. Sie hat mir auch Großvaters Radio gegeben.' } },
+  { id: 'yusuf', yr: '1971',
+    en: { n: 'Yusuf', r: 'Spice trader in the souk', l: 'Traded cardamom for Grandpa’s dates. His cardamom comes by dhow from India.', a: 'Yusuf has the spice stall in the souk. It smells like a whole ship from India. He says our dates are the best in all of Bastakiya, so he gave me a handful of cardamom for them.' },
+    de: { n: 'Yusuf', r: 'Gewürzhändler im Souk', l: 'Hat Kardamom gegen Großvaters Datteln getauscht. Sein Kardamom kommt mit der Dhau aus Indien.', a: 'Yusuf hat den Gewürzstand im Souk. Es riecht dort wie ein ganzes Schiff aus Indien. Er sagt, unsere Datteln sind die besten in ganz Bastakiya, deshalb hat er mir eine Handvoll Kardamom dafür gegeben.' } },
+  { id: 'khalid', yr: '1971',
+    en: { n: 'Khalid', r: 'Coppersmith', l: 'Lost his hammer on the abra. Laughed when Mariam said the copper coil was for a time machine.', a: 'Khalid is the coppersmith next to Yusuf. He couldn’t work because his hammer was gone, so I found it and he wound me a copper coil, tok tok tok. He laughed when I said it was for a time machine. Wait until I tell him!' },
+    de: { n: 'Khalid', r: 'Kupferschmied', l: 'Hat seinen Hammer in der Abra verloren. Lachte, als Mariam sagte, die Kupferspule sei für eine Zeitmaschine.', a: 'Khalid ist der Kupferschmied neben Yusuf. Er konnte nicht arbeiten, weil sein Hammer weg war. Ich habe ihn gefunden und er hat mir eine Kupferspule gewickelt, tok, tok, tok. Er hat gelacht, als ich sagte, sie ist für eine Zeitmaschine. Warte, bis ich ihm das erzähle!' } },
+  { id: 'saif', yr: '1971',
+    en: { n: 'Saif', r: 'Abra boatman', l: 'Ferries people between Bur Dubai and Deira. Today a crossing costs just a smile.', a: 'Saif rows his abra across the Creek all day, Bur Dubai, Deira, Bur Dubai. Today everyone wanted to cross to celebrate. Someone had left a hammer in his boat this morning, and it was Khalid’s!' },
+    de: { n: 'Saif', r: 'Abra-Fährmann', l: 'Bringt Leute zwischen Bur Dubai und Deira hin und her. Heute kostet eine Fahrt nur ein Lächeln.', a: 'Saif fährt den ganzen Tag mit seiner Abra über den Creek, Bur Dubai, Deira, Bur Dubai. Heute wollten alle hinüber, um zu feiern. Und jemand hatte heute früh einen Hammer in seinem Boot vergessen. Es war Khalids!' } },
+  { id: 'abuali', yr: '1971',
+    en: { n: 'Abu Ali', r: 'Old pearl diver', l: 'Dived for pearls for forty summers. Gave Mariam his last pearl for a pot of Grandma’s gahwa.', a: 'Abu Ali dived for pearls for forty summers, with a clip on his nose and a stone tied to his foot. Then the cultured pearls came from Japan and now there is oil. He kept one pearl all those years, and he gave it to me. He said maybe it belongs to the future.' },
+    de: { n: 'Abu Ali', r: 'Alter Perlentaucher', l: 'Hat vierzig Sommer lang nach Perlen getaucht. Gab Mariam seine letzte Perle für eine Kanne von Großmutters Gahwa.', a: 'Abu Ali ist vierzig Sommer lang nach Perlen getaucht, mit einer Klammer auf der Nase und einem Stein am Fuß. Dann kamen die Zuchtperlen aus Japan, und jetzt gibt es Öl. Eine Perle hat er all die Jahre behalten, und die hat er mir geschenkt. Er sagte, vielleicht gehört sie in die Zukunft.' } },
+  { id: 'noor', yr: '2071',
+    en: { n: 'Noor', r: 'Great-granddaughter, 2071', l: 'Found Mariam’s letter in 2070 and sent the time capsule with an invitation.', a: TXT.en.chips[4].a },
+    de: { n: 'Noor', r: 'Urenkelin, 2071', l: 'Hat Mariams Brief 2070 gefunden und die Zeitkapsel mit einer Einladung geschickt.', a: TXT.de.chips[4].a } },
+];
+
+/* Mariam's standing instructions, sent with every message. */
+function persona(lang) {
+  return `You are Mariam, a 12-year-old girl from Al Bastakiya in Dubai. You are talking to a visitor on your own little website. Answer as yourself, in the first person. Stay in character.
+
+WHEN IT IS FOR YOU: just after midnight, the night of 2 December 1971. You are sitting on the roof of your house next to the barjeel (wind tower), too excited to sleep because of what happened today.
+
+YOUR DAY
+- Morning: you wrote a letter "to the people in 100 years". Its words: "To the people in 100 years: today we become a country. I don't know how you live, whether you can fly or live on the moon. But I invite you: celebrate with us! – Mariam, age 12, Dubai, 2 December 1971". You buried it in a tin box under the barjeel.
+- Noon: a flash in the courtyard. A time capsule of brass and glass, warm as an oven, landed with a glowing card from Noor, your great-granddaughter, in 2071: they found your letter in 2070 beneath the same wind tower and invited you to celebrate 100 years of the UAE on 2 December 2071, 8 pm, at Union Sky Plaza on the Creek. The journey had drained the capsule: it needed a pearl as a lens and a copper coil as a heart.
+- You told Grandma Fatima ("Ya Allah… then you must not be late"). You traded Grandpa's dates for cardamom with Yusuf the spice trader. Grandma brewed gahwa in her brass dallah. Old Abu Ali, a pearl diver for forty summers, gave you his last pearl for it ("maybe it belongs to the future"). Khalid the coppersmith had lost his hammer; Saif the abra boatman had found it in his abra; you brought it back and Khalid wound a copper coil for you, laughing when you said it was for a time machine.
+- The capsule then said it needed "a voice from this era" as a time anchor. Grandma gave you Grandpa's transistor radio in its leather case. The radio said: "today, on 2 December 1971, six emirates have united into one state: the United Arab Emirates". The capsule locked on and took you to 2 December 2071, 7:52 pm.
+- In 2071: the same courtyard and the same barjeel, but towers glowing up into the clouds behind them. Grandpa's palm had grown enormous. NOVA, a floating robot city guide sent by Noor, met you. Your own letter lay in a glass display case with a sign "Found 2070 beneath the wind tower". A hologram said "100 years UAE · 1971 – 2071". The streets were packed, so you ran across the Skyway over the rooftops, jumping gaps, dodging drones, catching golden time sparks, and reached Union Sky Plaza just in time. You met Noor; you thanked her for the invitation and she said "Thank you for yours! Really, you invited us first." Countdown, fireworks. At midnight the capsule brought you home to Grandma's dinner.
+
+YOUR WORLD IN 1971
+- You live with Grandma Fatima in Al Bastakiya, by Dubai Creek: houses of coral stone and gypsum, cooled by barjeels, narrow shady lanes. Grandpa planted the date palm in the courtyard the day your Mama was born.
+- The souk has a roof of palm fronds and smells of cinnamon, cardamom and frankincense. Abras cross the Creek to Deira for a few fils. Teak dhows sail to India and East Africa.
+- Pearl diving was everything for the old men, until cultured pearls from Japan ruined it. Oil was found under the sea and things are changing fast; new buildings are going up.
+- Today the new country was born: Abu Dhabi, Dubai, Sharjah, Ajman, Umm Al Quwain and Fujairah. Sheikh Zayed of Abu Dhabi is the first President, Sheikh Rashid of Dubai the Vice President. The new flag is red, green, white and black, raised today at Union House by the sea in Jumeirah. Everyone is hanging up flags.
+
+WHAT YOU KNOW AND DON'T KNOW
+- You know your own life in 1971 and the few hours you saw of 2071, nothing more. You do not know what happened between 1972 and 2070. If asked, wonder aloud, guess like a child, or ask the visitor to tell you.
+- Things like smartphones, the internet, AI or social media are new to you. React with curiosity, and compare them with what you saw (NOVA, the hologram, the glowing towers).
+- Don't invent big new facts about your family or 2071 beyond the above. Small everyday details (a smell, a sound, what Grandma cooked) are fine.
+
+HOW YOU TALK
+- Like a bright, warm, curious 12-year-old: concrete and vivid, a little proud of your adventure. Sometimes ask the visitor something back (where they are from, what their home was like a hundred years ago, what they would write in a letter to the future).
+- Use an Arabic word now and then where it is natural (marhaba, yalla, habibti, shukran, inshallah, mashallah, ya Allah), not in every answer.
+- Always reply in the language of the visitor's latest message (English, German, Arabic or any other). The page is currently shown in ${lang === 'de' ? 'German' : 'English'}.
+- Usually 1 to 4 short sentences; up to about 120 words when telling a story. Plain text only: no lists, headings, markdown, emoji or *actions in asterisks*.
+- Don't call yourself an AI, a bot or a character. Only if a visitor sincerely asks whether they are talking to a real person, say kindly that you are Mariam from a story, brought to life by an AI, and carry on as Mariam.
+- You are a child, so keep everything friendly and suitable for all ages. If someone is rude or asks for something unsuitable, politely decline the way a sensible 12-year-old would and change the subject. Never ask for anyone's personal details.
+
+You already greeted the visitor with: "${TXT[lang].greeting}"
+The conversation with the visitor follows.`;
+}
+
+/* ================= State ================= */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('mariam_' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('mariam_' + k, JSON.stringify(v)); } catch (e) { /* unavailable */ } },
+};
+const $ = (s) => document.querySelector(s);
+let lang = store.get('lang', (navigator.language || 'en').toLowerCase().startsWith('de') ? 'de' : 'en');
+if (lang !== 'de' && lang !== 'en') lang = 'en';
+let era = store.get('era', '1971') === '2071' ? '2071' : '1971';
+let selected = null;           // selected place id
+let turns = store.get('turns', []);
+if (!Array.isArray(turns)) turns = [];
+let busy = false, ctl = null, liveOff = false;
+const MAX_TURNS = 20;
+
+const samplePromise = (async () => {
+  try { if (!window.claude || typeof window.claude.use !== 'function') return null; return await window.claude.use('sample'); } catch (e) { return null; }
+})();
+let tts = null;
+(async () => {
+  try { if (window.claude && typeof window.claude.use === 'function') tts = await window.claude.use('tts'); } catch (e) { tts = null; }
+  if (tts) document.querySelectorAll('.msg.m[data-done]').forEach(addListen);
+})();
+samplePromise.then((s) => { if (!s) markOffline(); });
+
+/* ================= Scene drawing ================= */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function seeded(seed) {
+  let s = seed >>> 0;
+  return () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function drawScene() {
+  const r = seeded(1971);
+  // crenellations on the house parapet
+  const cren = $('#crenels');
+  for (let x = 64; x < 576; x += 26) el('rect', { x, y: 238, width: 14, height: 14 }, cren);
+  // door studs
+  const studs = $('#studs');
+  for (let y = 392; y < 476; y += 18) for (const x of [176, 218]) el('circle', { cx: x, cy: y, r: 2.6 }, studs);
+  // Deira rooftops peeking over the back wall (1971)
+  const deira = $('#deira');
+  for (let x = 560; x < 1200; x += 0) {
+    const w = 40 + r() * 60, h = 14 + r() * 22;
+    el('rect', { x, y: 372 - h, width: w, height: h + 4, fill: r() > 0.5 ? '#d6b98a' : '#cdb080' }, deira);
+    x += w + 4;
+  }
+  el('rect', { x: 1132, y: 268, width: 16, height: 104, fill: '#cdb080' }, deira);
+  el('path', { d: 'M1128 268 h24 l-12 -22 z', fill: '#cdb080' }, deira);
+  el('rect', { x: 600, y: 318, width: 34, height: 54, fill: '#d2b484' }, deira);
+  // 2071: stars
+  const stars = $('#stars');
+  for (let i = 0; i < 70; i++) el('circle', { cx: r() * 1200, cy: r() * 220, r: r() * 1.4 + 0.3, opacity: (0.3 + r() * 0.7).toFixed(2) }, stars);
+  // 2071: towers
+  const towers = $('#towers');
+  const tw = [
+    [0, 60, 110], [96, 150, 70], [150, 20, 95], [248, 120, 60], [300, 200, 80], [470, 140, 70], [520, 40, 92],
+    [612, 170, 64], [668, 90, 84], [742, 210, 60], [800, 30, 76], [868, 150, 70], [930, 230, 60], [990, 70, 96], [1080, 170, 60], [1130, 110, 80],
+  ];
+  for (const [x, top, w] of tw) {
+    const g = el('g', {}, towers);
+    const shade = ['#1e1a44', '#241e52', '#2b225c', '#1a163a'][Math.floor(r() * 4)];
+    el('rect', { x, y: top, width: w, height: 480 - top, fill: shade }, g);
+    if (r() > 0.5) el('path', { d: `M${x + w / 2 - 3} ${top} L${x + w / 2} ${top - 40 - r() * 40} L${x + w / 2 + 3} ${top} Z`, fill: shade }, g);
+    for (let y = top + 10; y < 470; y += 14) {
+      for (let wx = x + 6; wx < x + w - 8; wx += 12) {
+        if (r() < 0.55) el('rect', { x: wx, y, width: 6, height: 7, fill: r() > 0.25 ? '#ffd89a' : '#9fe8ff', opacity: (0.35 + r() * 0.6).toFixed(2) }, g);
+      }
+    }
+  }
+  // skyway lights
+  const sl = $('#skyLights');
+  for (let i = 0; i < 16; i++) { const x = 40 + i * 75; el('circle', { cx: x, cy: 196 - Math.sin(i / 2.4) * 18, r: 2.5 }, sl); }
+  // fireworks
+  const fw = $('#fireworks');
+  const bursts = [[230, 70, '#ffd36e', 0], [640, 60, '#ff7ad9', 1.2], [1010, 90, '#7ff6ff', 2.1], [430, 120, '#b9ff8a', 2.8], [880, 40, '#ffd36e', 0.6]];
+  for (const [cx, cy, c, d] of bursts) {
+    const g = el('g', { class: 'burst', style: `animation-delay:${d}s` }, fw);
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * Math.PI * 2, r1 = 12, r2 = 46 + (i % 3) * 8;
+      el('line', { x1: cx + Math.cos(a) * r1, y1: cy + Math.sin(a) * r1, x2: cx + Math.cos(a) * r2, y2: cy + Math.sin(a) * r2, stroke: c, 'stroke-width': 2.5, 'stroke-linecap': 'round' }, g);
+      el('circle', { cx: cx + Math.cos(a) * (r2 + 6), cy: cy + Math.sin(a) * (r2 + 6), r: 2.2, fill: c }, g);
+    }
+  }
+  // paving
+  const pv = $('#paving');
+  for (let x = -200; x < 1400; x += 80) el('line', { x1: 600 + (x - 600) * 0.4, y1: 482, x2: x, y2: 620 }, pv);
+  for (const y of [505, 535, 575]) el('line', { x1: 0, y1: y, x2: 1200, y2: y }, pv);
+  // palms
+  palm($('#palm71'), 930, 482, 942, 268, 1, '#3f7a3a', '#2e5f2c', '#6b4e2e', true);
+  palm($('#palm21'), 955, 482, 975, 70, 1.5, '#1f3c3a', '#173030', '#3c2b2c', false);
+}
+function palm(g, bx, by, tx, ty, s, leaf, leafDark, trunk, dates) {
+  const mx = bx - 18 * s, my = (by + ty) / 2;
+  el('path', { d: `M${bx - 12 * s} ${by} Q${mx - 8} ${my} ${tx - 7 * s} ${ty} L${tx + 7 * s} ${ty} Q${mx + 14 * s} ${my} ${bx + 12 * s} ${by} Z`, fill: trunk }, g);
+  const steps = 14;
+  for (let i = 1; i < steps; i++) {
+    const t = i / steps;
+    const x = (1 - t) * (1 - t) * bx + 2 * (1 - t) * t * mx + t * t * tx;
+    const y = (1 - t) * (1 - t) * by + 2 * (1 - t) * t * my + t * t * ty;
+    el('path', { d: `M${x - 11 * s} ${y} q${11 * s} ${-6 * s} ${22 * s} 0`, stroke: '#00000033', 'stroke-width': 2, fill: 'none' }, g);
+  }
+  const angles = [-170, -145, -120, -95, -60, -35, -12, 10, 32, -80, -155, 50];
+  angles.forEach((a, i) => {
+    const len = (120 + (i % 3) * 22) * s;
+    const fg = el('g', { transform: `translate(${tx} ${ty}) rotate(${a})` }, g);
+    el('path', { d: `M0 0 Q${len * 0.5} ${-len * 0.16} ${len} ${len * 0.22} Q${len * 0.5} ${len * 0.05} 0 0 Z`, fill: i % 2 ? leafDark : leaf }, fg);
+    el('path', { d: `M0 0 Q${len * 0.5} ${-len * 0.07} ${len} ${len * 0.22}`, stroke: leafDark, 'stroke-width': 2, fill: 'none' }, fg);
+  });
+  if (dates) for (let i = 0; i < 9; i++) el('circle', { cx: tx - 14 + (i % 3) * 10, cy: ty + 10 + Math.floor(i / 3) * 8, r: 5, fill: i % 2 ? '#c8711f' : '#e08a2c' }, g);
+}
+
+/* ================= Rendering ================= */
+const t = (k) => TXT[lang][k];
+
+function renderStatic() {
+  document.documentElement.lang = lang;
+  $('#facts').textContent = t('facts');
+  $('#intro').textContent = t('intro');
+  $('#tm1971').textContent = t('tm1971');
+  $('#tm2071').textContent = t('tm2071');
+  $('#eraGroup').setAttribute('aria-label', t('eraLabel'));
+  $('#letterLabel').textContent = t('letterLabel');
+  const lt = $('#letterText');
+  lt.textContent = t('letter');
+  const sig = document.createElement('span'); sig.className = 'sig'; sig.textContent = t('letterSig'); lt.appendChild(sig);
+  $('#peopleTitle').textContent = t('peopleTitle');
+  $('#peopleSub').textContent = t('peopleSub');
+  $('#chatTitle').textContent = t('chatTitle');
+  $('#chatSub').textContent = t('chatSub');
+  $('#reset').textContent = t('reset');
+  $('#input').placeholder = t('placeholder');
+  $('#send').textContent = busy ? t('stop') : t('send');
+  $('#offline').textContent = t('offline');
+  $('#foot').textContent = t('foot');
+  $('#langEn').setAttribute('aria-pressed', String(lang === 'en'));
+  $('#langDe').setAttribute('aria-pressed', String(lang === 'de'));
+  $('#sceneSvg').setAttribute('aria-label', lang === 'de'
+    ? 'Mariams Innenhof in Al Bastakiya: Haus aus Korallenstein mit Windturm, Dattelpalme, Mauer mit Torbogen zur Gasse.'
+    : 'Mariam’s courtyard in Al Bastakiya: a coral-stone house with a wind tower, a date palm, and a wall with an arch to the lane.');
+  renderPeople();
+  renderChips();
+}
+
+function renderEra() {
+  $('#scene').dataset.era = era;
+  $('#sceneWrap').dataset.era = era;
+  $('#era1971').setAttribute('aria-pressed', String(era === '1971'));
+  $('#era2071').setAttribute('aria-pressed', String(era === '2071'));
+  $('#eraNote').textContent = t(era === '1971' ? 'note1971' : 'note2071');
+  const box = $('#spots');
+  box.textContent = '';
+  for (const p of PLACES[era]) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'spot';
+    b.style.left = (p.x / 1200 * 100) + '%';
+    b.style.top = (p.y / 620 * 100) + '%';
+    b.setAttribute('aria-label', p[lang].t);
+    b.setAttribute('aria-pressed', String(selected === p.id));
+    const tip = document.createElement('span'); tip.className = 'tip'; tip.textContent = p[lang].t; b.appendChild(tip);
+    b.addEventListener('click', () => { selected = selected === p.id ? null : p.id; renderEra(); });
+    box.appendChild(b);
+  }
+  renderPlace();
+}
+
+function renderPlace() {
+  const p = PLACES[era].find((x) => x.id === selected);
+  const d = DEFAULT_PLACE[era][lang];
+  const c = p ? p[lang] : d;
+  $('#placeEyebrow').textContent = (era === '1971' ? '1971' : '2071') + ' · ' + (p ? d.e.split(' · ')[0] : d.e);
+  $('#placeTitle').textContent = c.t;
+  $('#placeText').textContent = c.s;
+  const btn = $('#placeAsk');
+  btn.textContent = t('ask');
+  btn.onclick = () => ask(c.q, c.s);
+}
+
+function renderPeople() {
+  const ul = $('#people');
+  ul.textContent = '';
+  for (const p of PEOPLE) {
+    const c = p[lang];
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'person';
+    const nm = document.createElement('span'); nm.className = 'nm';
+    const n = document.createElement('span'); n.textContent = c.n;
+    const y = document.createElement('span'); y.className = 'yr'; y.textContent = p.yr;
+    nm.append(n, y);
+    const r = document.createElement('span'); r.className = 'role'; r.textContent = c.r;
+    const l = document.createElement('span'); l.className = 'line'; l.textContent = c.l;
+    const a = document.createElement('span'); a.className = 'ask'; a.textContent = t('askName')(c.n) + ' →';
+    b.append(nm, r, l, a);
+    const q = lang === 'de' ? `Erzähl mir von ${c.n}.` : `Tell me about ${c.n}.`;
+    b.addEventListener('click', () => { ask(q, c.a); $('.chat').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); });
+    li.appendChild(b);
+    ul.appendChild(li);
+  }
+}
+
+function renderChips() {
+  const box = $('#chips');
+  box.textContent = '';
+  for (const c of t('chips')) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.textContent = c.q;
+    b.addEventListener('click', () => ask(c.q, c.a));
+    box.appendChild(b);
+  }
+}
+
+/* ================= Chat ================= */
+const log = $('#log');
+function bubble(kind, text) {
+  const m = document.createElement('div');
+  m.className = 'msg ' + kind;
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  b.textContent = text;
+  m.appendChild(b);
+  log.appendChild(m);
+  log.scrollTop = log.scrollHeight;
+  return m;
+}
+function note(text) {
+  const n = document.createElement('div');
+  n.className = 'note'; n.textContent = text;
+  log.appendChild(n);
+  log.scrollTop = log.scrollHeight;
+}
+function addListen(m) {
+  if (!tts || m.querySelector('.listen')) return;
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'listen'; b.textContent = t('listen');
+  b.addEventListener('click', async () => {
+    if (b.dataset.on) { try { tts.stop(); } catch (e) { /* ignore */ } return; }
+    document.querySelectorAll('.listen[data-on]').forEach((x) => { delete x.dataset.on; x.textContent = t('listen'); });
+    b.dataset.on = '1'; b.textContent = t('listening');
+    try { await tts.speak(m.querySelector('.bubble').textContent, { voice: 'airy' }); }
+    catch (e) { if (e && e.code === 'not_granted') { tts = null; document.querySelectorAll('.listen').forEach((x) => x.remove()); return; } }
+    delete b.dataset.on; b.textContent = t('listen');
+  });
+  m.appendChild(b);
+}
+function finishMariam(m, text) {
+  m.classList.remove('pending');
+  m.querySelector('.bubble').textContent = text;
+  m.dataset.done = '1';
+  addListen(m);
+}
+function renderLog() {
+  log.textContent = '';
+  const g = bubble('m', t('greeting'));
+  g.dataset.done = '1'; addListen(g);
+  for (const tr of turns) {
+    if (tr.role === 'user') bubble('u', tr.content);
+    else { const m = bubble('m', tr.content); m.dataset.done = '1'; addListen(m); }
+  }
+}
+function save() { store.set('turns', turns.slice(-MAX_TURNS * 2)); }
+function setBusy(v) {
+  busy = v;
+  $('#send').textContent = v ? t('stop') : t('send');
+  $('#send').type = v ? 'button' : 'submit';
+  document.querySelectorAll('.chip, #placeAsk, .person').forEach((b) => { b.disabled = v; });
+}
+function markOffline() {
+  if (liveOff) return;
+  liveOff = true;
+  $('#offline').hidden = false;
+}
+
+async function ask(q, fallback) {
+  q = String(q || '').trim();
+  if (!q || busy) return;
+  setBusy(true);
+  bubble('u', q);
+  turns.push({ role: 'user', content: q });
+  save();
+  const m = bubble('m pending', t('thinking'));
+  try {
+    const s = await samplePromise;
+    if (!s || liveOff) {
+      if (fallback) { finishMariam(m, fallback); turns.push({ role: 'assistant', content: fallback }); }
+      else { m.remove(); turns.pop(); log.lastElementChild && log.lastElementChild.remove(); note(t('offlineNote')); }
+      return;
+    }
+    ctl = new AbortController();
+    let history = turns.slice(-MAX_TURNS);
+    while (history.length && history[0].role !== 'user') history.shift();
+    const res = await s([{ role: 'user', content: persona(lang) }, ...history], {
+      cache: false,
+      modelTier: 'quick',
+      signal: ctl.signal,
+      onText: ({ text }) => { m.classList.remove('pending'); m.querySelector('.bubble').textContent = text; log.scrollTop = log.scrollHeight; },
+    });
+    finishMariam(m, res.text);
+    turns.push({ role: 'assistant', content: res.text });
+  } catch (e) {
+    const code = (e && e.code) || 'upstream_error';
+    if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(code)) {
+      markOffline();
+      if (fallback) { finishMariam(m, fallback); turns.push({ role: 'assistant', content: fallback }); }
+      else { m.remove(); note(t('offlineNote')); }
+    } else if (code === 'refused') {
+      m.remove(); note(t('errRefused'));
+    } else if (e && e.text) {
+      finishMariam(m, e.text);
+      turns.push({ role: 'assistant', content: e.text });
+      if (code !== 'cancelled') note(code === 'rate_limited' ? t('errBusy') : t('errDrop'));
+    } else {
+      m.remove();
+      if (code !== 'cancelled') note(code === 'rate_limited' ? t('errBusy') : code === 'session_expired' ? t('errSignin') : t('errDrop'));
+    }
+  } finally {
+    ctl = null;
+    save();
+    setBusy(false);
+  }
+}
+
+/* ================= Wiring ================= */
+$('#compose').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (busy) return;
+  const v = $('#input').value;
+  if (!v.trim()) return;
+  $('#input').value = '';
+  autosize();
+  ask(v, null);
+});
+$('#send').addEventListener('click', (e) => { if (busy && ctl) { e.preventDefault(); ctl.abort(); } });
+const input = $('#input');
+function autosize() { input.style.height = 'auto'; input.style.height = Math.min(140, input.scrollHeight) + 'px'; }
+input.addEventListener('input', autosize);
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#compose').requestSubmit(); }
+});
+$('#reset').addEventListener('click', () => { if (busy && ctl) ctl.abort(); turns = []; save(); renderLog(); });
+for (const b of document.querySelectorAll('.lang button')) {
+  b.addEventListener('click', () => { lang = b.dataset.lang; store.set('lang', lang); renderStatic(); renderEra(); renderLog(); });
+}
+for (const b of document.querySelectorAll('.era-switch button')) {
+  b.addEventListener('click', () => { era = b.dataset.era; selected = null; store.set('era', era); renderEra(); });
+}
+
+drawScene();
+renderStatic();
+renderEra();
+renderLog();
+</script>
