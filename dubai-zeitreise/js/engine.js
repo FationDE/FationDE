@@ -110,15 +110,19 @@ const Engine = {
     requestAnimationFrame(loop);
   },
   resize() {
-    const vw = innerWidth, vh = innerHeight;
+    // Notch / Statusleiste aussparen
+    let il = 0, ir = 0, it = 0, ib = 0;
+    const probe = document.getElementById('safe');
+    if (probe) { const cs = getComputedStyle(probe); il = parseFloat(cs.paddingLeft) || 0; ir = parseFloat(cs.paddingRight) || 0; it = parseFloat(cs.paddingTop) || 0; ib = parseFloat(cs.paddingBottom) || 0; }
+    const vw = innerWidth - il - ir, vh = innerHeight - it - ib;
     const s = Math.min(vw / W, vh / H);
     this.scale = s;
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
     const st = this.stage;
     st.style.width = W * s + 'px';
     st.style.height = H * s + 'px';
-    st.style.left = (vw - W * s) / 2 + 'px';
-    st.style.top = (vh - H * s) / 2 + 'px';
+    st.style.left = il + (vw - W * s) / 2 + 'px';
+    st.style.top = it + (vh - H * s) / 2 + 'px';
     st.style.setProperty('--u', s);
     this.canvas.width = Math.round(W * s * this.dpr);
     this.canvas.height = Math.round(H * s * this.dpr);

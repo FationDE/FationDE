@@ -256,6 +256,11 @@ button {
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+#safe {
+  position: fixed; visibility: hidden; pointer-events: none;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+
 /* ---------- Hochformat-Hinweis ---------- */
 #rotate {
   position: fixed;

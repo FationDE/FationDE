@@ -1,5 +1,5 @@
 /* Offline-Cache: Nach dem ersten Besuch läuft das Spiel auch ohne Internet. */
-const CACHE = 'einladung-v1';
+const CACHE = 'einladung-v2';
 const FILES = [
   './', 'index.html', 'css/style.css', 'manifest.webmanifest', 'icon.svg',
   'js/i18n.js', 'js/engine.js', 'js/audio.js', 'js/art.js', 'js/scenes.js',

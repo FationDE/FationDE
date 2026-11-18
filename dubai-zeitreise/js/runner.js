@@ -32,7 +32,7 @@ class Runner {
   enter() {
     UI.setChapter('ch3');
     UI.showInventory(false);
-    $('#touch').hidden = !matchMedia('(pointer: coarse)').matches;
+    $('#touch').hidden = !(matchMedia('(pointer: coarse)').matches || G.touchSeen);
     Music.play('2071');
     G.save('runner');
     this.r = seeded(99);
@@ -113,7 +113,7 @@ class Runner {
     if (k.ArrowRight || k.KeyD || k.TouchRight) dir += 1;
     const jumpNow = !!(k.Space || k.ArrowUp || k.KeyW || k.TouchJump);
     if (jumpNow && !this.jumpHeld) p.buffer = 0.14;
-    if (!jumpNow && this.jumpHeld && p.vy < -320) p.vy = -320;
+    if (!jumpNow && this.jumpHeld && p.vy < -540) p.vy = -540;
     this.jumpHeld = jumpNow;
 
     const target = dir * 270;

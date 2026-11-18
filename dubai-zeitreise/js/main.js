@@ -173,6 +173,11 @@ function restartGame() {
     b.addEventListener('lostpointercapture', off);
   }
   addEventListener('contextmenu', (e) => e.preventDefault());
+  // Touch-Tasten auch zeigen, wenn das Gerät sich nicht als Touch meldet, aber berührt wird
+  addEventListener('touchstart', () => {
+    G.touchSeen = true;
+    if (Engine.mode instanceof Runner) $('#touch').hidden = false;
+  }, { passive: true });
   document.addEventListener('visibilitychange', () => { if (document.hidden) Engine.keys = {}; });
 
   Engine.setMode(new Title());
